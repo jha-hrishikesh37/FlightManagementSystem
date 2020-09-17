@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -43,9 +42,12 @@ public class Booking {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="user_id")
 	private User user;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "booking")
-	private List<Passenger> passengerList;
-	@ManyToOne(cascade = CascadeType.ALL)
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="passenger_id")
+	private Passenger passenger;
+	
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="scheduled_flight_id")
 	private ScheduledFlight scheduledFlight;
 }

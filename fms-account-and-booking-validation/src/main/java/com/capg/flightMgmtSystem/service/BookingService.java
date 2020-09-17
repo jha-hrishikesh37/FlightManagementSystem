@@ -5,6 +5,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import com.capg.flightMgmtSystem.entities.Booking;
+import com.capg.flightMgmtSystem.entities.Passenger;
 
 public interface BookingService {
 	
@@ -14,4 +15,3 @@ public interface BookingService {
 	void validateBooking(Booking booking) throws MessagingException;
 	void validatePassenger(Booking booking) throws MessagingException;
 }
-

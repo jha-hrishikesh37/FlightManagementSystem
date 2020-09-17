@@ -14,6 +14,7 @@ import com.capg.flightMgmtSystem.entities.Passenger;
 import com.capg.flightMgmtSystem.entities.User;
 import com.capg.flightMgmtSystem.repositories.BookingRepository;
 import com.capg.flightMgmtSystem.repositories.PassengerRepository;
+import com.capg.flightMgmtSystem.repositories.UserRepository;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -36,6 +37,7 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Override
 	public void validateBooking(Booking booking) throws MessagingException {
+		
 		User user = booking.getUser();
 		MimeMessage mailMessage = emailSenderService.createMessage();
 	    MimeMessageHelper helper = new MimeMessageHelper(mailMessage, true);
@@ -44,7 +46,7 @@ public class BookingServiceImpl implements BookingService {
 	    helper.setSubject("Booking Confirmation!");
 	    helper.setFrom("dsonaje6@gmail.com");
 	    helper.setText("<html><body style='border-style: solid;\r\n" + 
-	    		"  border-color: #DCDCDC; background-color: #F0FFFF; height: 250px; width:500px; margin-left:250px'>"
+	    		"  border-color: #DCDCDC; background-color: #F0FFFF; height: 350px; width:500px; margin-left:250px'>"
 	    		+ "<h1>Thanks for registration!</h1><br>" +
 	    		booking+"<br><button type='submit' autofocus style='margin-left:220px; border-radius: 9px; border: 2px solid #DCDCDC'>"
 	    		+"<a href="+">Confirm Booking</a></button>",true);
@@ -55,8 +57,8 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Override
 	public void validatePassenger(Booking booking) throws MessagingException {
-		List<Passenger> pass = booking.getPassengerList();
-		passengerRepository.saveAll(pass);
+//		List<Passenger> pass = booking.getPassengerList();
+//		passengerRepository.saveAll(pass);
 	}
 	
 	@Override

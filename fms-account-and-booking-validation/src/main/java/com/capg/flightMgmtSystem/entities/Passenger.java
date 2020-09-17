@@ -38,7 +38,4 @@ public class Passenger {
 	@Column(name = "luggage")
 	private double luggage; 
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "booking_id")
-	private Booking booking;
 }

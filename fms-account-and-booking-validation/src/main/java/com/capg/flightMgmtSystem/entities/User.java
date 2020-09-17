@@ -36,9 +36,6 @@ public class User {
 	private Long phoneNumber;
 	@Column(name = "email_id")
 	private String email;
-	
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name="user_id")
-//	private User user;
+
 }
 

@@ -37,3 +37,5 @@ public class ScheduledFlight {
 	@JoinColumn(name = "flight_id")
 	private Flight flight;
 }
+
+
