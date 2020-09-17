@@ -10,11 +10,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.capg.flightMgmtSystem.entities.Booking;
-import com.capg.flightMgmtSystem.entities.Passenger;
 import com.capg.flightMgmtSystem.entities.User;
 import com.capg.flightMgmtSystem.repositories.BookingRepository;
 import com.capg.flightMgmtSystem.repositories.PassengerRepository;
-import com.capg.flightMgmtSystem.repositories.UserRepository;
 
 @Service
 public class BookingServiceImpl implements BookingService {
