@@ -1,6 +1,7 @@
 package com.capg.flightMgmtSystem.entities;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,17 +17,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Getter
 @Setter
-
 @Entity
 @Table(name = "booking")
 public class Booking {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "booking_id")
@@ -42,11 +41,31 @@ public class Booking {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="passenger_id")
 	private Passenger passenger;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="scheduled_flight_id")
 	private ScheduledFlight scheduledFlight;
+	
+	@Override
+	public String toString() {
+		return "bookingId=" + bookingId + ", bookingDate=" + bookingDate + ", ticketCost=" + ticketCost
+				+ ", numberOfPassengers=" + numberOfPassengers + ",\n" + user + ",\n" + passenger
+				+ ",\n" + scheduledFlight+"\n";
+	}
+
+	public Booking(Long bookingId, Date bookingDate, double ticketCost, int numberOfPassengers, User user,
+			Passenger passenger, ScheduledFlight scheduledFlight) {
+		super();
+		this.bookingId = bookingId;
+		this.bookingDate = bookingDate;
+		this.ticketCost = ticketCost;
+		this.numberOfPassengers = numberOfPassengers;
+		this.user = user;
+		this.passenger = passenger;
+		this.scheduledFlight = scheduledFlight;
+	}
+
 }

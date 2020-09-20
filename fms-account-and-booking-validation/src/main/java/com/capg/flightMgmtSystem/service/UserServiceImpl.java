@@ -27,7 +27,7 @@ org.slf4j.Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Override
 	public void addUser(User user) throws MessagingException, UserAlreadyExistsException {
 		logger.trace("Add User working...");
-		System.out.println("User working...");
+		
 		User existingUser = userRepository.findPassengerByEmailIgnoreCase(user.getEmail());
 		System.out.println(existingUser);
         if(existingUser != null)
@@ -62,3 +62,4 @@ org.slf4j.Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	}
 
 }
+

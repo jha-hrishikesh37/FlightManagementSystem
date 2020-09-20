@@ -11,17 +11,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Getter
 @Setter
-
 @Entity
 @Table(name = "flight")
 public class Flight {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "flight_number")
@@ -33,4 +31,17 @@ public class Flight {
 	@Column(name = "seat_capacity")
 	private int seatCapacity;
 	
+	@Override
+	public String toString() {
+		return "flightNumber= " + flightNumber + ", carrierName= " + carrierName + ", flightModel= " + flightModel
+				+ ", seatCapacity= " + seatCapacity+"\n";
+	}
+	
+	public Flight(Long flightNumber, String carrierName, String flightModel, int seatCapacity) {
+		super();
+		this.flightNumber = flightNumber;
+		this.carrierName = carrierName;
+		this.flightModel = flightModel;
+		this.seatCapacity = seatCapacity;
+	}
 }

@@ -12,17 +12,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Getter
 @Setter
-
 @Entity
 @Table(name = "sheduled_flight")
 public class ScheduledFlight {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "scheduled_flight_id")
@@ -30,12 +28,26 @@ public class ScheduledFlight {
 	@Column(name = "available_seat")
 	private int availableSeat;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "schedule_id")
 	private Schedule schedule;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "flight_id")
 	private Flight flight;
+	
+	@Override
+	public String toString() {
+		return "scheduledFlightId=" + scheduledFlightId + ", availableSeat=" + availableSeat
+				+ ", \n" + schedule + ", \n" + flight+"\n";
+	}
+	
+	public ScheduledFlight(Long scheduledFlightId, int availableSeat, Schedule schedule, Flight flight) {
+		super();
+		this.scheduledFlightId = scheduledFlightId;
+		this.availableSeat = availableSeat;
+		this.schedule = schedule;
+		this.flight = flight;
+	}
 }
 
 

@@ -1,0 +1,123 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container">
+<div class="card bg-light">
+<article class="card-body mx-auto" style="max-width: 600px;">
+	<h4 class="card-title mt-3 text-center">Create Account</h4>
+	<form (ngSubmit)="validateUser()" #enForm="ngForm">
+	<div class="form-group input-group">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+		 </div>
+     <input id="name" name="name" class="form-control" required minlength="4"
+     [(ngModel)]="userDetails.name" #name="ngModel" >
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+          <small class="text-danger">
+            <small *ngIf="name.errors.required">
+              Fullname is required.
+            </small>
+            <small *ngIf="name.errors.minlength">
+              Name must be at least 4 characters long.
+            </small>
+          </small>
+        </div>
+  </div> <!-- form-group// -->
+
+  <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+		 </div>
+      <input type="email" class="form-control" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+      #email="ngModel" placeholder="E-mail" id="email" name="email" [(ngModel)]="userDetails.email" required>
+
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+        <small class="text-danger">
+          <small *ngIf="email.errors.required">
+            E-Mail is required.
+          </small>
+          <small *ngIf="email.errors.pattern">
+            Invalid Email
+          </small>
+        </small>
+      </div>
+
+    </div> <!-- form-group// -->
+
+
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+		</div>
+		<select class="custom-select" style="max-width: 80px;">
+		    <option selected="">+91</option>
+		    <option value="1">+92</option>
+		    <option value="2">+93</option>
+		    <option value="3">+94</option>
+		</select>
+    	<input  type="text" name="no" pattern="^[0-9]{10}$" #no="ngModel" [(ngModel)]="userDetails.phoneNumber"
+      class="form-control" placeholder="Mobile Number" #mobile="ngModel" required>
+
+      <div *ngIf="no.invalid && (no.dirty || no.touched)">
+        <small class="text-danger">
+          <small *ngIf="no.errors.required">
+            Phone Number is mandatory.
+          </small>
+          <small *ngIf="no.errors.pattern">
+            Invalid Number.
+          </small>
+        </small>
+      </div>
+    </div> <!-- form-group// -->
+
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+		</div>
+		<select class="form-control" >
+			<option selected=""> Select User type</option>
+			<option>Admin</option>
+			<option>Passenger</option>
+		</select>
+  </div> <!-- form-group end.// -->
+  
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+	  	</div>
+          <input
+          type="password"
+          class="form-control"
+          pattern="^[A-Za-z0-9\s]{5,100}$"
+          #pass="ngModel"
+          placeholder="Create Password"
+          id="pass"
+          name="pass"
+          [(ngModel)]="userDetails.password"
+          required
+        />
+        <div *ngIf="pass.invalid && (pass.dirty || pass.touched)">
+          <small class="text-danger">
+            <small *ngIf="pass.errors.required">
+              Password is required.
+            </small>
+            <small *ngIf="pass.errors.pattern">
+              Min length 5.
+            </small>
+          </small>
+        </div>
+    </div> <!-- form-group// -->
+    <input type="submit" value="SignUp" [disabled]="enForm.form.invalid" class="btn btn-primary"/>
+    
+         
+    <p class="text-center">Have an account? <a href="">Log In</a> </p>                                                                 
+</form>
+</article>
+</div> <!-- card.// -->
+
+</div> 
+<!--container end.//-->

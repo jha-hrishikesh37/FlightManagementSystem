@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.capg.flightMgmtSystem.entities.Flight;
 import com.capg.flightMgmtSystem.exceptions.EmptyRepositoryException;
+import com.capg.flightMgmtSystem.exceptions.NotFoundException;
 import com.capg.flightMgmtSystem.repositories.FlightRepository;
 
 @Service
@@ -16,10 +17,14 @@ public class FlightServiceImpl implements FlightService {
 	FlightRepository flightRepository;
 
 	@Override
-	public Flight viewFlight(Long flightId) {
-		Flight flight = flightRepository.findById(flightId).get();
+	public Flight viewFlight(Long flightId) throws NotFoundException  {
+		Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new
+				  NotFoundException("Flight not found for this id : " + flightId));
+
+		System.out.println("Sad");
 		return flight;
-	}
+		}
+	
 
 	@Override
 	public List<Flight> viewFlight() throws EmptyRepositoryException {
@@ -32,3 +37,5 @@ public class FlightServiceImpl implements FlightService {
 		}
 	}
 }
+
+

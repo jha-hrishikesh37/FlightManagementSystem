@@ -11,17 +11,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Getter
 @Setter
-
 @Entity
 @Table(name = "passenger")
 public class Passenger {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "passenger_id")
@@ -35,4 +33,18 @@ public class Passenger {
 	@Column(name = "luggage")
 	private double luggage; 
 	
+	@Override
+	public String toString() {
+		return "passengerId=" + passengerId + ", passengerName=" + passengerName + ", passengerAge="
+				+ passengerAge + ", passengerUniqueId=" + passengerUniqueId + ", luggage=" + luggage;
+	}
+	
+	public Passenger(Long passengerId, String passengerName, int passengerAge, Long passengerUniqueId, double luggage) {
+		super();
+		this.passengerId = passengerId;
+		this.passengerName = passengerName;
+		this.passengerAge = passengerAge;
+		this.passengerUniqueId = passengerUniqueId;
+		this.luggage = luggage;
+	}
 }

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +21,15 @@ import com.capg.flightMgmtSystem.entities.Booking;
 import com.capg.flightMgmtSystem.entities.Flight;
 import com.capg.flightMgmtSystem.entities.User;
 import com.capg.flightMgmtSystem.exceptions.EmptyRepositoryException;
+import com.capg.flightMgmtSystem.exceptions.NotFoundException;
 import com.capg.flightMgmtSystem.exceptions.UserAlreadyExistsException;
 import com.capg.flightMgmtSystem.service.BookingService;
 import com.capg.flightMgmtSystem.service.FlightService;
 import com.capg.flightMgmtSystem.service.UserService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping(value="/bootcamp/user",method= {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT})
+@RequestMapping(value="/bootcamp/user",method= {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT})	//Base URL
 public class RestApiController {
 	
 	org.slf4j.Logger logger = LoggerFactory.getLogger(RestApiController.class);	
@@ -40,45 +43,63 @@ public class RestApiController {
 	@Autowired
 	BookingService bookingService;
 	
+	/*************************************** Register User **************************************/
+	
 	@PostMapping("/registerUser")
-    public ResponseEntity<?> registerUser(@RequestBody User user) throws MessagingException, UserAlreadyExistsException
+    public ResponseEntity<?> registerUser(@RequestBody User user) throws MessagingException, UserAlreadyExistsException			
     {
-		logger.trace("Add user working...");
+		logger.info("Add user working...");
      
 			userService.addUser(user);
             return ResponseEntity.ok(HttpStatus.OK);
     }
 	
+	/*************************************** Check Flight Availability **************************************/
+	
+	/*************************************** View Flight with ID **************************************/
+	
 	@GetMapping("/viewFlight/{flightNumber}")
-	public ResponseEntity<Flight> viewFlight(@PathVariable("flightNumber") Long flightId){
+	public ResponseEntity<Flight> viewFlight(@PathVariable("flightNumber") Long flightId) throws NotFoundException {
+		logger.info("Flight with Id displayed");
 		Flight flight = flightService.viewFlight(flightId);
 		return new ResponseEntity<Flight>(flight, HttpStatus.OK);
 	}
 	
+	/*************************************** View All Flights **************************************/
+	
 	@GetMapping("/viewAllFlights")
 	 public ResponseEntity<List<Flight>> viewAllFlights() throws EmptyRepositoryException{
+		logger.info("All flights will be displayed");
 		List<Flight> flights= flightService.viewFlight();
 			return new ResponseEntity<List<Flight>>(flights, HttpStatus.OK);		
 	}
 	
+	/*************************************** Flight Booking **************************************/
+	
 	@PostMapping("/booking")
 	 public ResponseEntity<?> passengerBooking(@RequestBody Booking booking) throws MessagingException, UserAlreadyExistsException
     {
-		    logger.trace("Add booking working...");
+		    logger.info("Add booking working...");
 		    bookingService.addBooking(booking);
             return ResponseEntity.ok(HttpStatus.OK);
     }
 	
+	/*************************************** View All Bookings **************************************/
 	@GetMapping("/viewAllBookings")
 	 public ResponseEntity<List<Booking>> viewAllBookings() throws EmptyRepositoryException{
+		logger.info("All bookings will be displayed");
 		List<Booking> books = bookingService.viewBooking();
 			return new ResponseEntity<List<Booking>>(books, HttpStatus.OK);		
 		}
 	
+	/*************************************** View Booking with ID **************************************/
+	
 	@GetMapping("/viewBookings/{bookingId}")
 	 public ResponseEntity<Booking> viewBookings(@PathVariable("bookingId") Long id) throws EmptyRepositoryException{
+		logger.info("Booking with Id displayed");
 		Booking books = bookingService.viewBooking(id);
 			return new ResponseEntity<Booking>(books, HttpStatus.OK);		
 		}
 	
 }
+

@@ -45,7 +45,7 @@ public class BookingServiceImpl implements BookingService {
 	    helper.setFrom("dsonaje6@gmail.com");
 	    helper.setText("<html><body style='border-style: solid;\r\n" + 
 	    		"  border-color: #DCDCDC; background-color: #F0FFFF; height: 350px; width:500px; margin-left:250px'>"
-	    		+ "<h1>Thanks for registration!</h1><br>" +
+	    		+ "<h1>Thanks for Booking!</h1><br>" +
 	    		booking+"<br><button type='submit' autofocus style='margin-left:220px; border-radius: 9px; border: 2px solid #DCDCDC'>"
 	    		+"<a href="+">Confirm Booking</a></button>",true);
 
@@ -55,8 +55,7 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Override
 	public void validatePassenger(Booking booking) throws MessagingException {
-//		List<Passenger> pass = booking.getPassengerList();
-//		passengerRepository.saveAll(pass);
+
 	}
 	
 	@Override
@@ -72,3 +71,4 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 }
+
