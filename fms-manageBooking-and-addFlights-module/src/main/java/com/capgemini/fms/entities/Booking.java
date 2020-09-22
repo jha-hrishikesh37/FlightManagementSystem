@@ -1,3 +1,9 @@
+/*
+ * Project Name : Flight Management System
+ *
+ * 
+ * */
+
 package com.capgemini.fms.entities;
 
 import java.math.BigInteger;
@@ -22,6 +28,13 @@ public class Booking {
 	private BigInteger bookingId;
 	private String bookingDate;
 	private int noOfPassengers;
+
+	public Booking(BigInteger bookingId, String bookingDate, int noOfPassengers) {
+		super();
+		this.bookingId = bookingId;
+		this.bookingDate = bookingDate;
+		this.noOfPassengers = noOfPassengers;
+	}
 
 	public BigInteger getBookingId() {
 		return bookingId;
