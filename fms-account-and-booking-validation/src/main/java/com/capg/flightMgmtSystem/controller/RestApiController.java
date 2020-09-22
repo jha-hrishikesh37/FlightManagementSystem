@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +23,7 @@ import com.capg.flightMgmtSystem.entities.Booking;
 import com.capg.flightMgmtSystem.entities.Flight;
 import com.capg.flightMgmtSystem.entities.User;
 import com.capg.flightMgmtSystem.exceptions.EmptyRepositoryException;
+import com.capg.flightMgmtSystem.exceptions.InsufficientSeatsException;
 import com.capg.flightMgmtSystem.exceptions.NotFoundException;
 import com.capg.flightMgmtSystem.exceptions.UserAlreadyExistsException;
 import com.capg.flightMgmtSystem.service.BookingService;
@@ -29,7 +32,7 @@ import com.capg.flightMgmtSystem.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping(value="/bootcamp/user",method= {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT})	//Base URL
+@RequestMapping(value="/fms/user",method= {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT})	//Base URL
 public class RestApiController {
 	
 	org.slf4j.Logger logger = LoggerFactory.getLogger(RestApiController.class);	
@@ -54,6 +57,13 @@ public class RestApiController {
             return ResponseEntity.ok(HttpStatus.OK);
     }
 	
+	/*************************************** Add Flight **************************************/
+	
+	@PostMapping("/addFlight")
+	public ResponseEntity<?> addFlight(@RequestBody Flight flight) {
+		return flightService.addFlight(flight);
+	}
+	
 	/*************************************** Check Flight Availability **************************************/
 	
 	/*************************************** View Flight with ID **************************************/
@@ -74,32 +84,49 @@ public class RestApiController {
 			return new ResponseEntity<List<Flight>>(flights, HttpStatus.OK);		
 	}
 	
-	/*************************************** Flight Booking **************************************/
+	/*************************************** Flight Booking**************************************/
 	
 	@PostMapping("/booking")
-	 public ResponseEntity<?> passengerBooking(@RequestBody Booking booking) throws MessagingException, UserAlreadyExistsException
+	 public ResponseEntity<?> passengerBooking(@RequestBody Booking booking) throws MessagingException, UserAlreadyExistsException, InsufficientSeatsException
     {
 		    logger.info("Add booking working...");
 		    bookingService.addBooking(booking);
             return ResponseEntity.ok(HttpStatus.OK);
     }
 	
+	
 	/*************************************** View All Bookings **************************************/
-	@GetMapping("/viewAllBookings")
-	 public ResponseEntity<List<Booking>> viewAllBookings() throws EmptyRepositoryException{
-		logger.info("All bookings will be displayed");
-		List<Booking> books = bookingService.viewBooking();
-			return new ResponseEntity<List<Booking>>(books, HttpStatus.OK);		
-		}
 	
-	/*************************************** View Booking with ID **************************************/
+	@GetMapping("/readAllBooking")
+	public Iterable<Booking> readAllBookings() {
+
+		return bookingService.displayAllBooking();
+	}
+
+	/*************************************** Update Booking **************************************/
 	
-	@GetMapping("/viewBookings/{bookingId}")
-	 public ResponseEntity<Booking> viewBookings(@PathVariable("bookingId") Long id) throws EmptyRepositoryException{
-		logger.info("Booking with Id displayed");
-		Booking books = bookingService.viewBooking(id);
-			return new ResponseEntity<Booking>(books, HttpStatus.OK);		
-		}
+	@PutMapping("/updateBooking")
+	public ResponseEntity<?> modifyBooking(@RequestBody Booking updateBooking) {
+
+		return bookingService.updateBooking(updateBooking);
+	}
+	
+	/*************************************** Search Booking **************************************/
+
+	@GetMapping("/searchBooking/{id}")
+	public ResponseEntity<?> searchBookingByID(@PathVariable("id") Long bookingId) {
+
+		return bookingService.findBookingById(bookingId);
+	}
+
+	/*************************************** Delete Booking **************************************/
+	
+	@DeleteMapping("/deleteBooking/{id}")
+	public ResponseEntity<?> deleteBookingByID(@PathVariable("id") Long bookingId) {
+
+		return bookingService.deleteBooking(bookingId);
+	}
+	
 	
 }
 

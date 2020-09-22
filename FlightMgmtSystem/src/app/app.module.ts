@@ -9,11 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
+import { FlightBookingComponent } from './flight-booking/flight-booking.component';
+import { PassengerComponent } from './passenger/passenger.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent
+    RegisterComponent,
+    FlightBookingComponent,
+    PassengerComponent
   ],
   imports: [
     BrowserModule,

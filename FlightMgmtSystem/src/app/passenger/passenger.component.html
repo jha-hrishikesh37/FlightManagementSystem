@@ -1,0 +1,51 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container">
+<div class="card bg-light">
+<article class="card-body mx-auto" style="max-width: 600px;">
+	<h4 class="card-title mt-3 text-center">Passenger Details</h4>
+	<form (ngSubmit)="validatePassenger()" #enForm="ngForm">
+	<div class="form-group input-group">
+     <input id="passengerName" name="passengerName" class="form-control" required minlength="4" placeholder="Full Name"
+     [(ngModel)]="passengerDetails.passengerName" #passengerName="ngModel" >
+
+        <div *ngIf="passengerName.invalid && (passengerName.dirty || passengerName.touched)">
+          <small class="text-danger">
+            <small *ngIf="passengerName.errors.required">
+              Fullname is required.
+            </small>
+            <small *ngIf="passengerName.errors.minlength">
+              Name must be at least 4 characters long.
+            </small>
+          </small>
+        </div>
+  </div> 
+
+  <div class="form-group input-group">
+      <input type="text" class="form-control" 
+      #age="ngModel" placeholder="Age" id="age" name="age" [(ngModel)]="passengerDetails.passengerAge" required>
+  </div> 
+
+    <div class="form-group input-group">
+        <input type="text" class="form-control" 
+        #uId="ngModel" placeholder="Unique Id" id="uId" name="uId" [(ngModel)]="passengerDetails.age" required>
+    </div> 
+
+    <div class="form-group input-group">
+        <input type="text" class="form-control" 
+        #luggage="ngModel" placeholder="Luggage" id="luggage" name="luggage" [(ngModel)]="passengerDetails.luggage" required>
+    </div> 
+
+
+    <input type="submit" value="Submit" [disabled]="enForm.form.invalid" class="btn btn-primary"/>
+                                                                    
+</form>
+</article>
+</div> <!-- card.// -->
+
+</div> 
+<!--container end.//-->

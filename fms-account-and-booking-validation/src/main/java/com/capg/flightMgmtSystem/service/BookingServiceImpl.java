@@ -1,24 +1,37 @@
 package com.capg.flightMgmtSystem.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.capg.flightMgmtSystem.entities.Booking;
+import com.capg.flightMgmtSystem.entities.ScheduledFlight;
 import com.capg.flightMgmtSystem.entities.User;
+import com.capg.flightMgmtSystem.exceptions.InsufficientSeatsException;
+import com.capg.flightMgmtSystem.exceptions.NotFoundException;
 import com.capg.flightMgmtSystem.repositories.BookingRepository;
 import com.capg.flightMgmtSystem.repositories.PassengerRepository;
+import com.capg.flightMgmtSystem.repositories.ScheduledFlightRepository;
 
 @Service
 public class BookingServiceImpl implements BookingService {
 
+	Logger logger = LoggerFactory.getLogger(BookingServiceImpl.class);
+	
 	@Autowired
 	BookingRepository bookingRepository;
+	
+	@Autowired
+	ScheduledFlightRepository scheduleFlightRepository;
 		
 	@Autowired
 	PassengerRepository passengerRepository;
@@ -26,16 +39,33 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	EmailSenderService emailSenderService;
 	
+	/*************************************** Add Booking **************************************/
+	
 	@Override
-	public Booking addBooking(Booking booking) throws MessagingException {
+	public Booking addBooking(Booking booking) throws MessagingException, InsufficientSeatsException {
+		logger.info("Booking in Service works: ", booking);
 		bookingRepository.save(booking);
 		validateBooking(booking);
 		return booking;
 	}
 	
+	/*************************************** Validate Booking **************************************/
+	
 	@Override
-	public void validateBooking(Booking booking) throws MessagingException {
+	public void validateBooking(Booking booking) throws MessagingException, InsufficientSeatsException {
+		logger.info("Validate Booking");
 		
+		int passNo = booking.getNumberOfPassengers();
+		int avSeat = booking.getScheduledFlight().getAvailableSeat();
+		ScheduledFlight sFlight = booking.getScheduledFlight();
+		System.out.println(avSeat);
+		if(passNo > avSeat) {
+			throw new InsufficientSeatsException("Seats are not available, you can check another flight!!!");
+		}
+		else {
+			avSeat-=passNo;
+			sFlight.setAvailableSeat(avSeat);
+
 		User user = booking.getUser();
 		MimeMessage mailMessage = emailSenderService.createMessage();
 	    MimeMessageHelper helper = new MimeMessageHelper(mailMessage, true);
@@ -50,24 +80,65 @@ public class BookingServiceImpl implements BookingService {
 	    		+"<a href="+">Confirm Booking</a></button>",true);
 
 	    emailSenderService.sendEmail(mailMessage);
-	    validatePassenger(booking);
+	   
+		}
 	}
 	
-	@Override
-	public void validatePassenger(Booking booking) throws MessagingException {
-
-	}
+	
+	/*************************************** Update Booking **************************************/
 	
 	@Override
-	public Booking viewBooking(Long bookingId) {
-		Booking booking = bookingRepository.findById(bookingId).get();
-		return booking;
+	public ResponseEntity<?> updateBooking(Booking changedBooking) {
+		Optional<Booking> findBookingById = bookingRepository.findById(changedBooking.getBookingId());
+		try {
+			if (findBookingById.isPresent()) {
+				bookingRepository.save(changedBooking);
+				return new ResponseEntity<Booking>(HttpStatus.OK);
+			} else
+				throw new NotFoundException("Booking with Booking Id: " + changedBooking.getBookingId() + " not exists!!");
+		} catch (NotFoundException e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
 	}
 
+	/*************************************** Delete Booking **************************************/
+	
 	@Override
-	public List<Booking> viewBooking() {
-		List<Booking>bookings = bookingRepository.findAll();
-		return bookings;
+	public ResponseEntity<?> deleteBooking(Long bookingId) {
+		Optional<Booking> findBookingById = bookingRepository.findById(bookingId);
+		try {
+			if (findBookingById.isPresent()) {
+				bookingRepository.deleteById(bookingId);
+				return new ResponseEntity<Booking>(HttpStatus.OK);
+			} else
+				throw new NotFoundException("Booking not found for the entered BookingID");
+		} catch (NotFoundException e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	/*************************************** Display All Booking **************************************/
+
+	@Override
+	public Iterable<Booking> displayAllBooking() {
+
+		return bookingRepository.findAll();
+	}
+
+	/*************************************** Display Booking By ID **************************************/
+	
+	@Override
+	public ResponseEntity<?> findBookingById(Long bookingId) {
+		Optional<Booking> findById = bookingRepository.findById(bookingId);
+		try {
+			if (findById.isPresent()) {
+				Booking findBooking = findById.get();
+				return new ResponseEntity<Booking>(findBooking, HttpStatus.OK);
+			} else
+				throw new NotFoundException("No record found with ID " + bookingId);
+		} catch (NotFoundException e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

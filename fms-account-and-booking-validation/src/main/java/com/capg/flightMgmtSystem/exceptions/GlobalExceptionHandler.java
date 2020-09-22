@@ -24,6 +24,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     	return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
     
+    @ExceptionHandler(InsufficientSeatsException.class)
+    public ResponseEntity<?> handleInsufficientSeatsException(InsufficientSeatsException ex, WebRequest request){
+    	ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+    	return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
+    }
+    
     @ExceptionHandler(EmptyRepositoryException.class)
     public ResponseEntity<?> handleEmptyRepositoryException(EmptyRepositoryException ex, WebRequest request){
     	ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));

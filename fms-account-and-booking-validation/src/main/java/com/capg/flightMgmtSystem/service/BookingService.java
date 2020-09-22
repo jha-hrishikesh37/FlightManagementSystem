@@ -1,16 +1,19 @@
 package com.capg.flightMgmtSystem.service;
 
-import java.util.List;
-
 import javax.mail.MessagingException;
 
+import org.springframework.http.ResponseEntity;
+
 import com.capg.flightMgmtSystem.entities.Booking;
+import com.capg.flightMgmtSystem.exceptions.InsufficientSeatsException;
 
 public interface BookingService {
 	
-	Booking addBooking(Booking booking) throws MessagingException;
-	Booking viewBooking(Long bookingId);
-	List<Booking> viewBooking();
-	void validateBooking(Booking booking) throws MessagingException;
-	void validatePassenger(Booking booking) throws MessagingException;
+	Booking addBooking(Booking booking) throws MessagingException, InsufficientSeatsException;
+	void validateBooking(Booking booking) throws MessagingException, InsufficientSeatsException;
+	ResponseEntity<?> updateBooking(Booking changedBooking);
+	ResponseEntity<?> deleteBooking(Long bookingId);
+	Iterable<Booking> displayAllBooking();
+	ResponseEntity<?> findBookingById(Long bookingId);
 }
+

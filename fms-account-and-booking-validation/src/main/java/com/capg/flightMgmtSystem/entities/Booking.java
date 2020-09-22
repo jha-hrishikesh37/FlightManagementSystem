@@ -37,11 +37,11 @@ public class Booking {
 	@Column(name = "no_passegeners")
 	private int numberOfPassengers;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="passenger_id")
 	private Passenger passenger;
 	

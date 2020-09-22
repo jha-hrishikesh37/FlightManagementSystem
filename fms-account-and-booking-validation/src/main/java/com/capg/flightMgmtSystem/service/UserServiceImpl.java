@@ -23,6 +23,7 @@ org.slf4j.Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Autowired
 	EmailSenderService emailSenderService;
 	
+	/*************************************** Register User **************************************/
 	
 	@Override
 	public void addUser(User user) throws MessagingException, UserAlreadyExistsException {
@@ -40,12 +41,13 @@ org.slf4j.Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
         }  
     }
 
+	/*************************************** Validate User **************************************/
+	
 	@Override
 	public void validateUser(User user) throws MessagingException {
 		userRepository.save(user);
-        System.out.println("1 "+user);
-        User user1 = userRepository.findPassengerByEmailIgnoreCase(user.getEmail());
-        System.out.println("1 "+user1);
+        logger.info("user");
+        
         MimeMessage mailMessage = emailSenderService.createMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mailMessage, true);
         

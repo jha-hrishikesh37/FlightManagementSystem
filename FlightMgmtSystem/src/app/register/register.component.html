@@ -13,7 +13,7 @@
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-     <input id="name" name="name" class="form-control" required minlength="4"
+     <input id="name" name="name" class="form-control" required minlength="4" placeholder="Full Name"
      [(ngModel)]="userDetails.name" #name="ngModel" >
 
         <div *ngIf="name.invalid && (name.dirty || name.touched)">
