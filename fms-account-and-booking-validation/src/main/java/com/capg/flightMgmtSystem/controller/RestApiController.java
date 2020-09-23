@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capg.flightMgmtSystem.entities.Booking;
 import com.capg.flightMgmtSystem.entities.Flight;
+import com.capg.flightMgmtSystem.entities.ScheduledFlight;
 import com.capg.flightMgmtSystem.entities.User;
 import com.capg.flightMgmtSystem.exceptions.EmptyRepositoryException;
 import com.capg.flightMgmtSystem.exceptions.InsufficientSeatsException;
@@ -28,6 +29,7 @@ import com.capg.flightMgmtSystem.exceptions.NotFoundException;
 import com.capg.flightMgmtSystem.exceptions.UserAlreadyExistsException;
 import com.capg.flightMgmtSystem.service.BookingService;
 import com.capg.flightMgmtSystem.service.FlightService;
+import com.capg.flightMgmtSystem.service.ScheduledFlightService;
 import com.capg.flightMgmtSystem.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -45,6 +47,9 @@ public class RestApiController {
 	
 	@Autowired
 	BookingService bookingService;
+	
+	@Autowired
+	ScheduledFlightService scheduledFlightService;
 	
 	/*************************************** Register User **************************************/
 	
@@ -64,7 +69,14 @@ public class RestApiController {
 		return flightService.addFlight(flight);
 	}
 	
-	/*************************************** Check Flight Availability **************************************/
+	/*************************************** View All Scheduled FLights **************************************/
+	
+	@GetMapping("/viewAllScheduledFlights")
+	 public ResponseEntity<List<ScheduledFlight>> viewAllScheduledFlights() throws EmptyRepositoryException{
+		logger.info("All flights will be displayed");
+		List<ScheduledFlight> flights= scheduledFlightService.viewScheduledFlight();
+			return new ResponseEntity<List<ScheduledFlight>>(flights, HttpStatus.OK);		
+	}
 	
 	/*************************************** View Flight with ID **************************************/
 	
@@ -129,4 +141,3 @@ public class RestApiController {
 	
 	
 }
-

@@ -3,12 +3,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-
+<body>
 <div class="container">
-<div class="card bg-light">
+<div>
 <article class="card-body mx-auto" style="max-width: 600px;">
 	<h4 class="card-title mt-3 text-center">Passenger Details</h4>
-	<form (ngSubmit)="validatePassenger()" #enForm="ngForm">
+	<form (ngSubmit)="validatePassenger(passengerDetails)" #enForm="ngForm">
 	<div class="form-group input-group">
      <input id="passengerName" name="passengerName" class="form-control" required minlength="4" placeholder="Full Name"
      [(ngModel)]="passengerDetails.passengerName" #passengerName="ngModel" >
@@ -32,7 +32,7 @@
 
     <div class="form-group input-group">
         <input type="text" class="form-control" 
-        #uId="ngModel" placeholder="Unique Id" id="uId" name="uId" [(ngModel)]="passengerDetails.age" required>
+        #uId="ngModel" placeholder="Unique Id" id="uId" name="uId" [(ngModel)]="passengerDetails.passengerUniqueId" required>
     </div> 
 
     <div class="form-group input-group">
@@ -45,7 +45,7 @@
                                                                     
 </form>
 </article>
-</div> <!-- card.// -->
+</div> 
 
 </div> 
-<!--container end.//-->
+</body>

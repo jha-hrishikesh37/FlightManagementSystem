@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FMSServiceService } from '../f-ms-service.service';
 import { Passenger } from '../passenger';
+import { ScheduledFlight } from '../scheduledFlight';
+import { User } from '../User';
 
 @Component({
   selector: 'app-passenger',
@@ -11,16 +13,29 @@ import { Passenger } from '../passenger';
 export class PassengerComponent implements OnInit {
 
   passengerDetails:Passenger=new Passenger();
-  
+  scheduledFlight: ScheduledFlight=new ScheduledFlight();
+  userDetails: User=new User();
+
   constructor(private _fMSService: FMSServiceService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+   // this.scheduledFlightId = parseInt(this.route.snapshot.paramMap.get('scheduledFlightId'))
+
+    this.route.queryParams.subscribe(params => {
+      //this.userDetails = JSON.parse(params.userDetails)
+      this.scheduledFlight = JSON.parse(params.scheduledFlight)
+    });
   }
 
-  validatePassenger(){
-    this.router.navigate(['signup']);
+  validatePassenger(passenger){
+    console.log(passenger)
+    this.router.navigate(['/finalBooking'],{
+      queryParams:{
+        userDetails:JSON.stringify(this.userDetails),
+        scheduledFlight:JSON.stringify(this.scheduledFlight),
+        passenger:JSON.stringify(passenger)}
+    });
   }
 }
-
-

@@ -3,9 +3,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-
+<body>
 <div class="container">
-<div class="card bg-light">
+<div>
 <article class="card-body mx-auto" style="max-width: 600px;">
 	<h4 class="card-title mt-3 text-center">Create Account</h4>
 	<form (ngSubmit)="validateUser()" #enForm="ngForm">
@@ -26,8 +26,7 @@
             </small>
           </small>
         </div>
-  </div> <!-- form-group// -->
-
+  </div> 
   <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
@@ -46,7 +45,7 @@
         </small>
       </div>
 
-    </div> <!-- form-group// -->
+    </div> 
 
 
     <div class="form-group input-group">
@@ -72,7 +71,7 @@
           </small>
         </small>
       </div>
-    </div> <!-- form-group// -->
+    </div>
 
     <div class="form-group input-group">
     	<div class="input-group-prepend">
@@ -83,7 +82,7 @@
 			<option>Admin</option>
 			<option>Passenger</option>
 		</select>
-  </div> <!-- form-group end.// -->
+  </div> 
   
     <div class="form-group input-group">
     	<div class="input-group-prepend">
@@ -110,14 +109,14 @@
             </small>
           </small>
         </div>
-    </div> <!-- form-group// -->
+    </div> 
     <input type="submit" value="SignUp" [disabled]="enForm.form.invalid" class="btn btn-primary"/>
     
          
     <p class="text-center">Have an account? <a href="">Log In</a> </p>                                                                 
 </form>
 </article>
-</div> <!-- card.// -->
+</div> 
 
 </div> 
-<!--container end.//-->
+</body>

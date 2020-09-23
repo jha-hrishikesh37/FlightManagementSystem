@@ -11,13 +11,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FlightBookingComponent } from './flight-booking/flight-booking.component';
 import { PassengerComponent } from './passenger/passenger.component';
+import { ScheduledFlightComponent } from './scheduled-flight/scheduled-flight.component';
+import { BookingComponent } from './booking/booking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     FlightBookingComponent,
-    PassengerComponent
+    PassengerComponent,
+    ScheduledFlightComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,
