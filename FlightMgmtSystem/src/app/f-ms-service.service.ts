@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Booking } from './Booking';
+import { User } from './User';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,24 @@ export class FMSServiceService {
     return this.http.get(this.baseUrl+'/viewAllScheduledFlights');
   }
 
-  public createBooking(booking: Object): Observable<any> {
+  public createBooking(booking: Booking): Observable<any> {
     console.log("Services");
-    return this.http.post(this.baseUrl + '/booking', booking);
+    console.log(booking);
+    return this.http.post(this.baseUrl + '/finalBooking', booking);
+
+  }
+
+
+  authenticate(userName,password): Observable<any> {
+    return this.http.post<User>(this.baseUrl+"/doLogin", userName,password);
+  }
+
+  isUserLoggedIn() {
+    let user = sessionStorage.getItem('username');
+    console.log(user);
+    console.log(!(user === null))
+    return !(user === null)
   }
 }
+
+

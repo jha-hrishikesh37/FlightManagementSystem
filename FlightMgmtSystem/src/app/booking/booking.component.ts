@@ -16,7 +16,7 @@ export class BookingComponent implements OnInit {
   booking: Booking = new Booking();
   passenger: Passenger;
   scheduledFlight: ScheduledFlight;
-  userDetails: User;
+  user: User;
 
   submitted = false;
   constructor(private _fMSService: FMSServiceService,
@@ -25,7 +25,7 @@ export class BookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.userDetails = JSON.parse(params.userDetails),
+      this.user = JSON.parse(params.userDetails),
       this.scheduledFlight = JSON.parse(params.scheduledFlight),
       this.passenger = JSON.parse(params.passenger)
   });
@@ -37,7 +37,7 @@ export class BookingComponent implements OnInit {
   }
 
   save(booking) {
-    booking.userDetails = this.userDetails;
+    booking.user = this.user;
     booking.scheduledFlight = this.scheduledFlight;
     booking.passenger = this.passenger;
     this._fMSService.createBooking(booking)
@@ -55,7 +55,7 @@ export class BookingComponent implements OnInit {
 
   gotoList() {
    
-    this.router.navigate(['/booking']);
+    this.router.navigate(['/signup']);
     console.log("After navigation");
   }
 

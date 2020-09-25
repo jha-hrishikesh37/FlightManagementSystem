@@ -14,7 +14,7 @@
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
      <input id="name" name="name" class="form-control" required minlength="4" placeholder="Full Name"
-     [(ngModel)]="userDetails.name" #name="ngModel" >
+     [(ngModel)]="user.name" #name="ngModel" >
 
         <div *ngIf="name.invalid && (name.dirty || name.touched)">
           <small class="text-danger">
@@ -32,7 +32,7 @@
 		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
 		 </div>
       <input type="email" class="form-control" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-      #email="ngModel" placeholder="E-mail" id="email" name="email" [(ngModel)]="userDetails.email" required>
+      #email="ngModel" placeholder="E-mail" id="email" name="email" [(ngModel)]="user.email" required>
 
       <div *ngIf="email.invalid && (email.dirty || email.touched)">
         <small class="text-danger">
@@ -58,7 +58,7 @@
 		    <option value="2">+93</option>
 		    <option value="3">+94</option>
 		</select>
-    	<input  type="text" name="no" pattern="^[0-9]{10}$" #no="ngModel" [(ngModel)]="userDetails.phoneNumber"
+    	<input  type="text" name="no" pattern="^[0-9]{10}$" #no="ngModel" [(ngModel)]="user.phoneNumber"
       class="form-control" placeholder="Mobile Number" #mobile="ngModel" required>
 
       <div *ngIf="no.invalid && (no.dirty || no.touched)">
@@ -77,13 +77,29 @@
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
 		</div>
-		<select class="form-control" >
+		<select class="form-control" #userType="ngModel" id="userType"
+    name="userType"
+    [(ngModel)]="user.userType" >
 			<option selected=""> Select User type</option>
 			<option>Admin</option>
 			<option>Passenger</option>
 		</select>
   </div> 
   
+  <div class="form-group input-group">
+        <input
+        type="text"
+        class="form-control"
+        pattern="^[A-Za-z0-9\s]{5,100}$"
+        #userName="ngModel"
+        placeholder="Username"
+        id="userName"
+        name="userName"
+        [(ngModel)]="user.userName"
+        required
+      />
+  </div> 
+
     <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
@@ -96,7 +112,7 @@
           placeholder="Create Password"
           id="pass"
           name="pass"
-          [(ngModel)]="userDetails.password"
+          [(ngModel)]="user.password"
           required
         />
         <div *ngIf="pass.invalid && (pass.dirty || pass.touched)">
@@ -110,6 +126,7 @@
           </small>
         </div>
     </div> 
+
     <input type="submit" value="SignUp" [disabled]="enForm.form.invalid" class="btn btn-primary"/>
     
          

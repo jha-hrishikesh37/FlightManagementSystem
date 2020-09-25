@@ -25,9 +25,9 @@ export class ScheduledFlightComponent implements OnInit {
     this._fMSService.showScheduleFlights().subscribe(
       (data:Observable<ScheduledFlight[]>)=>this.scheduleFlights=data);
 
-      // this.route.queryParams.subscribe(params => {
-      //   this.userDetails = JSON.parse(params.userDetails)
-      // });
+      this.route.queryParams.subscribe(params => {
+        this.userDetails = JSON.parse(params.userDetails)
+      });
       
   }
 
@@ -38,7 +38,6 @@ export class ScheduledFlightComponent implements OnInit {
         scheduledFlight: JSON.stringify(this.scheduleFlights)
       }
     });
-   console.log("OKs"+this.scheduleFlights)
+   console.log("OKs"+schedeuledFlights)
   }
 }
-

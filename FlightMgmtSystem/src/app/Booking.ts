@@ -7,9 +7,12 @@ export class Booking {
     bookingId: number;
     bookingDate: string;
     noOfPassengers: number;
+    ticketCost:number;
     passenger: Passenger;
-    scheduleFlight: ScheduledFlight;
+    scheduledFlight: ScheduledFlight;
     user: User;
   
   }
+  
+
   

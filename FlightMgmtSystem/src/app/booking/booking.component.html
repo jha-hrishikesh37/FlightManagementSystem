@@ -2,10 +2,6 @@
 <h3>Create Booking</h3>
 <div [hidden]="submitted" style="width: 400px;">
   <form (ngSubmit)="onSubmit(booking)">
-    <div class="form-group">
-      <label for="name">Booking ID</label>
-      <input type="text" class="form-control" id="bookingId" required [(ngModel)]="booking.bookingId" name="bookingId">
-    </div>
 
     <div class="form-group">
       <label for="name">Booking Date</label>
@@ -15,6 +11,11 @@
     <div class="form-group">
       <label for="name">No of Passengers</label>
       <input type="text" class="form-control" id="noOfPassengers" required [(ngModel)]="booking.noOfPassengers" name="noOfPassengers">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Ticket Cost</label>
+      <input type="text" class="form-control" id="ticketCost" required [(ngModel)]="booking.ticketCost" name="ticketCost">
     </div>
 
     <div class="form-group">
@@ -30,3 +31,5 @@
   <h4>You submitted successfully!</h4>
 </div> -->
 </body>
+
+

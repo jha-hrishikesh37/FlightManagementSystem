@@ -24,7 +24,7 @@ export class PassengerComponent implements OnInit {
    // this.scheduledFlightId = parseInt(this.route.snapshot.paramMap.get('scheduledFlightId'))
 
     this.route.queryParams.subscribe(params => {
-      //this.userDetails = JSON.parse(params.userDetails)
+      this.userDetails = JSON.parse(params.userDetails)
       this.scheduledFlight = JSON.parse(params.scheduledFlight)
     });
   }

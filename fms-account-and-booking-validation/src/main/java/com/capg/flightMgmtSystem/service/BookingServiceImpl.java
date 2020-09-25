@@ -1,5 +1,6 @@
 package com.capg.flightMgmtSystem.service;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -12,12 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.capg.flightMgmtSystem.entities.Booking;
+import com.capg.flightMgmtSystem.entities.BookingDetails;
 import com.capg.flightMgmtSystem.entities.ScheduledFlight;
 import com.capg.flightMgmtSystem.entities.User;
 import com.capg.flightMgmtSystem.exceptions.InsufficientSeatsException;
-import com.capg.flightMgmtSystem.exceptions.NotFoundException;
+import com.capg.flightMgmtSystem.exceptions.NotFound_EmptyRepoException;
 import com.capg.flightMgmtSystem.repositories.BookingRepository;
 import com.capg.flightMgmtSystem.repositories.PassengerRepository;
 import com.capg.flightMgmtSystem.repositories.ScheduledFlightRepository;
@@ -42,19 +45,10 @@ public class BookingServiceImpl implements BookingService {
 	/*************************************** Add Booking **************************************/
 	
 	@Override
-	public Booking addBooking(Booking booking) throws MessagingException, InsufficientSeatsException {
+	@Transactional
+	public Booking addBooking(BookingDetails booking) throws MessagingException, InsufficientSeatsException {
 		logger.info("Booking in Service works: ", booking);
-		bookingRepository.save(booking);
-		validateBooking(booking);
-		return booking;
-	}
-	
-	/*************************************** Validate Booking **************************************/
-	
-	@Override
-	public void validateBooking(Booking booking) throws MessagingException, InsufficientSeatsException {
-		logger.info("Validate Booking");
-		
+		System.out.println(booking);
 		int passNo = booking.getNumberOfPassengers();
 		int avSeat = booking.getScheduledFlight().getAvailableSeat();
 		ScheduledFlight sFlight = booking.getScheduledFlight();
@@ -63,9 +57,38 @@ public class BookingServiceImpl implements BookingService {
 			throw new InsufficientSeatsException("Seats are not available, you can check another flight!!!");
 		}
 		else {
+		Booking book=new Booking();
+		
+		java.util.Date javaDate= new java.util.Date();
+		book.setBookingDate(new Date(javaDate.getTime()));
+		
+		book.setNumberOfPassengers(booking.getNumberOfPassengers());
+		book.setTicketCost(booking.getTicketCost());
+		book.setPassenger(booking.getPassenger());
+		book.setScheduledFlight(booking.getScheduledFlight());
+		book.setUser(booking.getUser());
+		
+		validateBooking(book);
+		
+		return book;
+		}
+	}
+	
+	/*************************************** Validate Booking **************************************/
+	
+	@Override
+	public void validateBooking(Booking booking) throws MessagingException, InsufficientSeatsException {
+		logger.info("Validate Booking");
+	
+		int passNo = booking.getNumberOfPassengers();
+		int avSeat = booking.getScheduledFlight().getAvailableSeat();
+		ScheduledFlight sFlight = booking.getScheduledFlight();
+		
 			avSeat-=passNo;
 			sFlight.setAvailableSeat(avSeat);
-
+			logger.info("Hey"+booking.getUser().getUserName()+booking.getUser().getPassword());
+			booking=bookingRepository.save(booking);
+			logger.info("Hello"+booking);
 		User user = booking.getUser();
 		MimeMessage mailMessage = emailSenderService.createMessage();
 	    MimeMessageHelper helper = new MimeMessageHelper(mailMessage, true);
@@ -73,16 +96,16 @@ public class BookingServiceImpl implements BookingService {
 	    helper.setTo(user.getEmail());
 	    helper.setSubject("Booking Confirmation!");
 	    helper.setFrom("dsonaje6@gmail.com");
-	    helper.setText("<html><body style='border-style: solid;\r\n" + 
-	    		"  border-color: #DCDCDC; background-color: #F0FFFF; height: 350px; width:500px; margin-left:250px'>"
-	    		+ "<h1>Thanks for Booking!</h1><br>" +
-	    		booking+"<br><button type='submit' autofocus style='margin-left:220px; border-radius: 9px; border: 2px solid #DCDCDC'>"
-	    		+"<a href="+">Confirm Booking</a></button>",true);
+//	    helper.setText("<html><body style='border-style: solid;\r\n" + 
+//	    		"  border-color: #DCDCDC; background-color: #F0FFFF; height: 350px; width:500px; margin-left:250px'>"
+//	    		+ "<h1>Thanks for Booking!</h1><br>" +
+//	    		booking+"<br><button type='submit' autofocus style='margin-left:220px; border-radius: 9px; border: 2px solid #DCDCDC'>"
+//	    		+"<a href="+">Confirm Booking</a></button>",true);
 
+	    helper.setText(emailSenderService.getS1()+booking+emailSenderService.getS2(), true);
 	    emailSenderService.sendEmail(mailMessage);
-	   
-		}
-	}
+	    
+	}	   
 	
 	
 	/*************************************** Update Booking **************************************/
@@ -95,8 +118,8 @@ public class BookingServiceImpl implements BookingService {
 				bookingRepository.save(changedBooking);
 				return new ResponseEntity<Booking>(HttpStatus.OK);
 			} else
-				throw new NotFoundException("Booking with Booking Id: " + changedBooking.getBookingId() + " not exists!!");
-		} catch (NotFoundException e) {
+				throw new NotFound_EmptyRepoException("Booking with Booking Id: " + changedBooking.getBookingId() + " not exists!!");
+		} catch (NotFound_EmptyRepoException e) {
 			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
@@ -111,8 +134,8 @@ public class BookingServiceImpl implements BookingService {
 				bookingRepository.deleteById(bookingId);
 				return new ResponseEntity<Booking>(HttpStatus.OK);
 			} else
-				throw new NotFoundException("Booking not found for the entered BookingID");
-		} catch (NotFoundException e) {
+				throw new NotFound_EmptyRepoException("Booking not found for the entered BookingID");
+		} catch (NotFound_EmptyRepoException e) {
 			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
@@ -135,8 +158,8 @@ public class BookingServiceImpl implements BookingService {
 				Booking findBooking = findById.get();
 				return new ResponseEntity<Booking>(findBooking, HttpStatus.OK);
 			} else
-				throw new NotFoundException("No record found with ID " + bookingId);
-		} catch (NotFoundException e) {
+				throw new NotFound_EmptyRepoException("No record found with ID " + bookingId);
+		} catch (NotFound_EmptyRepoException e) {
 			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}

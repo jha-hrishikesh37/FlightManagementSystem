@@ -1,5 +1,6 @@
 package com.capg.flightMgmtSystem.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -19,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capg.flightMgmtSystem.entities.Airport;
 import com.capg.flightMgmtSystem.entities.Booking;
+import com.capg.flightMgmtSystem.entities.BookingDetails;
 import com.capg.flightMgmtSystem.entities.Flight;
 import com.capg.flightMgmtSystem.entities.ScheduledFlight;
 import com.capg.flightMgmtSystem.entities.User;
-import com.capg.flightMgmtSystem.exceptions.EmptyRepositoryException;
 import com.capg.flightMgmtSystem.exceptions.InsufficientSeatsException;
-import com.capg.flightMgmtSystem.exceptions.NotFoundException;
+import com.capg.flightMgmtSystem.exceptions.NotFound_EmptyRepoException;
 import com.capg.flightMgmtSystem.exceptions.UserAlreadyExistsException;
 import com.capg.flightMgmtSystem.service.BookingService;
 import com.capg.flightMgmtSystem.service.FlightService;
@@ -62,17 +64,44 @@ public class RestApiController {
             return ResponseEntity.ok(HttpStatus.OK);
     }
 	
+	/***************************************Login*********************************************/
+	@PostMapping("/doLogin")
+	public User login(@RequestBody User user) {
+		String email=user.getEmail();
+		String password=user.getPassword();
+		return userService.doLogin(email, password);
+	}
+	
+	
+	/************************Find User*********************************/
+	@GetMapping(value="find/{id}")
+	public ResponseEntity<User> findById(@PathVariable Long id) throws NotFound_EmptyRepoException {
+		logger.info("ID"+id);
+		User user = userService.findUser(id);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
 	/*************************************** Add Flight **************************************/
 	
 	@PostMapping("/addFlight")
 	public ResponseEntity<?> addFlight(@RequestBody Flight flight) {
 		return flightService.addFlight(flight);
 	}
+
+	
+/*************************************** View ScheduledFlight with ID **************************************/
+	
+	@GetMapping("/viewScheduledFlight/{flightNumber}")
+	public ResponseEntity<ScheduledFlight> viewScheduledFlight(@PathVariable("flightNumber") Long flightId) throws NotFound_EmptyRepoException {
+		logger.info("Scheduled Flight with Id displayed");
+		ScheduledFlight sclFlight = scheduledFlightService.viewScheduledFlights(flightId);
+		return new ResponseEntity<ScheduledFlight>(sclFlight, HttpStatus.OK);
+	}
 	
 	/*************************************** View All Scheduled FLights **************************************/
 	
 	@GetMapping("/viewAllScheduledFlights")
-	 public ResponseEntity<List<ScheduledFlight>> viewAllScheduledFlights() throws EmptyRepositoryException{
+	 public ResponseEntity<List<ScheduledFlight>> viewAllScheduledFlights() throws NotFound_EmptyRepoException{
 		logger.info("All flights will be displayed");
 		List<ScheduledFlight> flights= scheduledFlightService.viewScheduledFlight();
 			return new ResponseEntity<List<ScheduledFlight>>(flights, HttpStatus.OK);		
@@ -81,7 +110,7 @@ public class RestApiController {
 	/*************************************** View Flight with ID **************************************/
 	
 	@GetMapping("/viewFlight/{flightNumber}")
-	public ResponseEntity<Flight> viewFlight(@PathVariable("flightNumber") Long flightId) throws NotFoundException {
+	public ResponseEntity<Flight> viewFlight(@PathVariable("flightNumber") Long flightId) throws NotFound_EmptyRepoException {
 		logger.info("Flight with Id displayed");
 		Flight flight = flightService.viewFlight(flightId);
 		return new ResponseEntity<Flight>(flight, HttpStatus.OK);
@@ -90,7 +119,7 @@ public class RestApiController {
 	/*************************************** View All Flights **************************************/
 	
 	@GetMapping("/viewAllFlights")
-	 public ResponseEntity<List<Flight>> viewAllFlights() throws EmptyRepositoryException{
+	 public ResponseEntity<List<Flight>> viewAllFlights() throws NotFound_EmptyRepoException{
 		logger.info("All flights will be displayed");
 		List<Flight> flights= flightService.viewFlight();
 			return new ResponseEntity<List<Flight>>(flights, HttpStatus.OK);		
@@ -98,10 +127,11 @@ public class RestApiController {
 	
 	/*************************************** Flight Booking**************************************/
 	
-	@PostMapping("/booking")
-	 public ResponseEntity<?> passengerBooking(@RequestBody Booking booking) throws MessagingException, UserAlreadyExistsException, InsufficientSeatsException
+	@PostMapping("/finalBooking")
+	 public ResponseEntity<?> passengerBooking(@RequestBody BookingDetails booking) throws MessagingException, UserAlreadyExistsException, InsufficientSeatsException
     {
 		    logger.info("Add booking working...");
+		    
 		    bookingService.addBooking(booking);
             return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -141,3 +171,4 @@ public class RestApiController {
 	
 	
 }
+

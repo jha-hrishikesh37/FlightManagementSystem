@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  userDetails:User=new User();
+  user:User=new User();
   
   constructor(private _fMSService: FMSServiceService,
     private router: Router,
@@ -21,12 +21,12 @@ export class RegisterComponent implements OnInit {
 
   validateUser(){
     console.log("Happy");
-    this._fMSService.registerUser(this.userDetails)
+    this._fMSService.registerUser(this.user)
         .subscribe((error) => console.log(error));
 
         this.router.navigate(['/allFlights'],{
           queryParams:{
-            userDetails:JSON.stringify(this.userDetails)}
+            userDetails:JSON.stringify(this.user)}
         });
   }
 
