@@ -11,6 +11,4 @@ public interface FlightService {
 
 	Flight viewFlight(Long flightId) throws NotFound_EmptyRepoException;
 	List<Flight> viewFlight() throws NotFound_EmptyRepoException;
-	ResponseEntity<Flight> addFlight(Flight flight);
 }
-

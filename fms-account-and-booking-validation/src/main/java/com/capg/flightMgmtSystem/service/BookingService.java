@@ -13,8 +13,8 @@ public interface BookingService {
 	
 	Booking addBooking(BookingDetails booking) throws MessagingException, InsufficientSeatsException;
 	void validateBooking(Booking booking) throws MessagingException, InsufficientSeatsException;
-	ResponseEntity<?> updateBooking(Booking changedBooking);
-	ResponseEntity<?> deleteBooking(Long bookingId);
 	Iterable<Booking> displayAllBooking();
 	ResponseEntity<?> findBookingById(Long bookingId);
 }
+
+

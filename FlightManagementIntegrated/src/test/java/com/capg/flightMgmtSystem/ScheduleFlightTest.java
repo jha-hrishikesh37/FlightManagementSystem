@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +20,9 @@ class ScheduleFlightTest {
 	  @Test()
 	  public final void scheduleFlight() throws NullPointerException, ParseException {
 		  String sDate1="25/09/2020";  
-		  Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+		  
+		  java.util.Date javaDate= new java.util.Date();
+		  Date date1= new Date(javaDate.getDate()); 
 		  
 		  Airport airport1= new Airport("A101","Spain","Spain Airport");
 		  Airport airport2= new Airport("A102","India","IGI Airport");
@@ -31,8 +32,8 @@ class ScheduleFlightTest {
 		  ScheduledFlight sFlight1 = new ScheduledFlight();
 		  assertNotNull(sFlight1);
 		  ScheduledFlight sFlight2 = null;
-		  ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,schedule,flight);
-		  ScheduledFlight sFlight4= new ScheduledFlight(new Long("101"),120,schedule,flight);
+		  ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,1000,schedule,flight);
+		  ScheduledFlight sFlight4= new ScheduledFlight(new Long("101"),120,1000,schedule,flight);
 		  assertTrue(sFlight3.equals(sFlight4));
 		  assertFalse(sFlight3.equals(sFlight2));
 		
@@ -43,7 +44,9 @@ class ScheduleFlightTest {
 	  @Test
 	  public final void stringScheduleTest() throws ParseException {
 		  String sDate1="25/09/2020";  
-		  Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+		  
+		  java.util.Date javaDate= new java.util.Date();
+		  Date date1= new Date(javaDate.getDate());   
 		  
 		  Airport airport1= new Airport("A101","Spain","Spain Airport");
 		  Airport airport2= new Airport("A102","India","IGI Airport");
@@ -52,11 +55,11 @@ class ScheduleFlightTest {
 		  Schedule schedule = new Schedule(new Long("101"), date1, date1, airport1, airport2);
 		  
 		  
-		  ScheduledFlight sFlight1= new ScheduledFlight(new Long("101"),120,schedule,flight);
-		  String result = String.format("scheduledFlightId=" + sFlight1.getScheduledFlightId() + ", availableSeat=" + sFlight1.getAvailableSeat()
-					+ ", \n" + schedule + ", \n" + flight,
+		  ScheduledFlight sFlight1= new ScheduledFlight(new Long("101"),120,1000,schedule,flight);
+		  String result = String.format("scheduledFlightId=" + sFlight1.getScheduledFlightId() + ", availableSeat=" + sFlight1.getAvailableSeat()+
+		 ", TicketCost= "+ sFlight1.getTicketCost()+ ", \n" + schedule + ", \n" + flight,
 				  sFlight1.getScheduledFlightId(), sFlight1.getFlight(), 
-				  sFlight1.getAvailableSeat(), sFlight1.getSchedule());
+				  sFlight1.getAvailableSeat(), sFlight1.getSchedule()+"\n");
 		  assertEquals(result, sFlight1.toString());
 	  }
 	  
@@ -65,7 +68,9 @@ class ScheduleFlightTest {
 	  @Test
 	  public final void testScheduledFlight() throws ParseException {
 		  String sDate1="25/09/2020";  
-		  Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+		  
+		  java.util.Date javaDate= new java.util.Date();
+		  Date date1= new Date(javaDate.getDate());   
 		  
 		  Airport airport1= new Airport("A101","Spain","Spain Airport");
 		  Airport airport2= new Airport("A102","India","IGI Airport");
@@ -74,7 +79,7 @@ class ScheduleFlightTest {
 		  Schedule schedule = new Schedule(new Long("101"), date1, date1, airport1, airport2);
 		  
 		  
-		  ScheduledFlight sFlight1= new ScheduledFlight(new Long("101"),120,schedule,flight);
+		  ScheduledFlight sFlight1= new ScheduledFlight(new Long("101"),120,1000,schedule,flight);
 		  assertEquals(b1, sFlight1.getScheduledFlightId());
 		  assertEquals(120, sFlight1.getAvailableSeat());
 		  assertEquals(flight, sFlight1.getFlight());

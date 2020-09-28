@@ -1,11 +1,12 @@
 package com.capg.flightMgmtSystem.entities;
 
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,14 +35,14 @@ public class Booking {
 	private Date bookingDate;
 	@Column(name = "ticket_cost")
 	private double ticketCost;
-	@Column(name = "no_passegeners")
-	private int numberOfPassengers;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
+//	@Column(name = "no_passegeners")
+//	private int numberOfPassengers;
+//	
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="passenger_id")
 	private Passenger passenger;
 	
@@ -51,18 +52,17 @@ public class Booking {
 	
 	@Override
 	public String toString() {
-		return "bookingId=" + bookingId + ", bookingDate=" + bookingDate + ", ticketCost=" + ticketCost
-				+ ", numberOfPassengers=" + numberOfPassengers + ",\n" + user + ",\n" + passenger
+		return "bookingId=" + bookingId + ", bookingDate=" + bookingDate +", ticketCost= "+ticketCost
+				+  ",\n" + user + ",\n" + passenger
 				+ ",\n" + scheduledFlight+"\n";
 	}
 
-	public Booking(Long bookingId, Date bookingDate, double ticketCost, int numberOfPassengers, User user,
+	public Booking(Long bookingId, Date bookingDate, double ticketCost, User user,
 			Passenger passenger, ScheduledFlight scheduledFlight) {
 		super();
 		this.bookingId = bookingId;
 		this.bookingDate = bookingDate;
 		this.ticketCost = ticketCost;
-		this.numberOfPassengers = numberOfPassengers;
 		this.user = user;
 		this.passenger = passenger;
 		this.scheduledFlight = scheduledFlight;

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capg.flightMgmtSystem.entities.Airport;
 import com.capg.flightMgmtSystem.entities.Booking;
+import com.capg.flightMgmtSystem.entities.BookingDetails;
 import com.capg.flightMgmtSystem.entities.Flight;
 import com.capg.flightMgmtSystem.entities.ScheduledFlight;
 import com.capg.flightMgmtSystem.entities.User;
@@ -61,6 +62,7 @@ public class RestApiController {
      
 			userService.addUser(user);
             return ResponseEntity.ok(HttpStatus.OK);
+            
     }
 	
 	/***************************************Login*********************************************/
@@ -127,10 +129,10 @@ public class RestApiController {
 	/*************************************** Flight Booking**************************************/
 	
 	@PostMapping("/finalBooking")
-	 public ResponseEntity<?> passengerBooking(@RequestBody Booking booking) throws MessagingException, UserAlreadyExistsException, InsufficientSeatsException
+	 public ResponseEntity<?> passengerBooking(@RequestBody BookingDetails booking) throws MessagingException, UserAlreadyExistsException, InsufficientSeatsException
     {
 		    logger.info("Add booking working...");
-		    System.out.println("Roshan");
+		    
 		    bookingService.addBooking(booking);
             return ResponseEntity.ok(HttpStatus.OK);
     }

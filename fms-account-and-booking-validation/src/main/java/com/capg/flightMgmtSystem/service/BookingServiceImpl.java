@@ -96,49 +96,12 @@ public class BookingServiceImpl implements BookingService {
 	    helper.setTo(user.getEmail());
 	    helper.setSubject("Booking Confirmation!");
 	    helper.setFrom("dsonaje6@gmail.com");
-//	    helper.setText("<html><body style='border-style: solid;\r\n" + 
-//	    		"  border-color: #DCDCDC; background-color: #F0FFFF; height: 350px; width:500px; margin-left:250px'>"
-//	    		+ "<h1>Thanks for Booking!</h1><br>" +
-//	    		booking+"<br><button type='submit' autofocus style='margin-left:220px; border-radius: 9px; border: 2px solid #DCDCDC'>"
-//	    		+"<a href="+">Confirm Booking</a></button>",true);
 
 	    helper.setText(emailSenderService.getS1()+booking+emailSenderService.getS2(), true);
 	    emailSenderService.sendEmail(mailMessage);
 	    
 	}	   
 	
-	
-	/*************************************** Update Booking **************************************/
-	
-	@Override
-	public ResponseEntity<?> updateBooking(Booking changedBooking) {
-		Optional<Booking> findBookingById = bookingRepository.findById(changedBooking.getBookingId());
-		try {
-			if (findBookingById.isPresent()) {
-				bookingRepository.save(changedBooking);
-				return new ResponseEntity<Booking>(HttpStatus.OK);
-			} else
-				throw new NotFound_EmptyRepoException("Booking with Booking Id: " + changedBooking.getBookingId() + " not exists!!");
-		} catch (NotFound_EmptyRepoException e) {
-			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
-	}
-
-	/*************************************** Delete Booking **************************************/
-	
-	@Override
-	public ResponseEntity<?> deleteBooking(Long bookingId) {
-		Optional<Booking> findBookingById = bookingRepository.findById(bookingId);
-		try {
-			if (findBookingById.isPresent()) {
-				bookingRepository.deleteById(bookingId);
-				return new ResponseEntity<Booking>(HttpStatus.OK);
-			} else
-				throw new NotFound_EmptyRepoException("Booking not found for the entered BookingID");
-		} catch (NotFound_EmptyRepoException e) {
-			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
-	}
 	
 	/*************************************** Display All Booking **************************************/
 

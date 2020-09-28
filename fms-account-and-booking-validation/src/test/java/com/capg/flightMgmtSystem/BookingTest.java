@@ -106,29 +106,5 @@ class BookingTest {
 		  assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
 		}
 		
-		@Test
-		public final void testCancelBooking() throws ParseException {
-			Booking booking2 = getBooking();
-			
-			bookingRepository.save(booking2);
-			  
-			ResponseEntity<?> responseEntity =  bookingService.deleteBooking(new Long("1"));
-			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-
-		}
-		
-		@Test
-		public final void testUpdateBooking() throws ParseException {
-			Booking booking3 = getBooking();
-			
-			bookingRepository.save(booking3);
-			
-			Booking updatedBooking = getUpdatedBooking();
-			
-			ResponseEntity<?> responseEntity = bookingService.updateBooking(updatedBooking);
-			assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-		}
-	
 }
-
 

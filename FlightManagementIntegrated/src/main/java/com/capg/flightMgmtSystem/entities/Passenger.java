@@ -32,19 +32,25 @@ public class Passenger {
 	private Long passengerUniqueId;
 	@Column(name = "luggage")
 	private double luggage; 
+
+	@Column(name = "no_passegeners")
+	private int numberOfPassengers;
+	
 	
 	@Override
 	public String toString() {
 		return "passengerId=" + passengerId + ", passengerName=" + passengerName + ", passengerAge="
-				+ passengerAge + ", passengerUniqueId=" + passengerUniqueId + ", luggage=" + luggage;
+				+ passengerAge + ", passengerUniqueId=" + passengerUniqueId + ", luggage=" + luggage+", noOfPassengers= "+numberOfPassengers;
 	}
 	
-	public Passenger(Long passengerId, String passengerName, int passengerAge, Long passengerUniqueId, double luggage) {
+	public Passenger(Long passengerId, String passengerName, int passengerAge, Long passengerUniqueId, int numberOfPassengers, double luggage) {
 		super();
 		this.passengerId = passengerId;
 		this.passengerName = passengerName;
 		this.passengerAge = passengerAge;
 		this.passengerUniqueId = passengerUniqueId;
+		this.numberOfPassengers = numberOfPassengers;
 		this.luggage = luggage;
 	}
 }
+

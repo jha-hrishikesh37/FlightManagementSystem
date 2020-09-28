@@ -27,6 +27,9 @@ public class ScheduledFlight {
 	private Long scheduledFlightId;
 	@Column(name = "available_seat")
 	private int availableSeat;
+
+	@Column(name = "ticket_cost")
+	private double ticketCost;
 	
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "schedule_id")
@@ -37,14 +40,15 @@ public class ScheduledFlight {
 	
 	@Override
 	public String toString() {
-		return "scheduledFlightId=" + scheduledFlightId + ", availableSeat=" + availableSeat
+		return "scheduledFlightId=" + scheduledFlightId + ", availableSeat=" + availableSeat+", TicketCost= "+ticketCost
 				+ ", \n" + schedule + ", \n" + flight+"\n";
 	}
 	
-	public ScheduledFlight(Long scheduledFlightId, int availableSeat, Schedule schedule, Flight flight) {
+	public ScheduledFlight(Long scheduledFlightId, int availableSeat,double ticketCost, Schedule schedule, Flight flight) {
 		super();
 		this.scheduledFlightId = scheduledFlightId;
 		this.availableSeat = availableSeat;
+		this.ticketCost = ticketCost;
 		this.schedule = schedule;
 		this.flight = flight;
 	}

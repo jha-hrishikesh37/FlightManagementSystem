@@ -82,14 +82,6 @@ public class RestApiController {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
-	/*************************************** Add Flight **************************************/
-	
-	@PostMapping("/addFlight")
-	public ResponseEntity<?> addFlight(@RequestBody Flight flight) {
-		return flightService.addFlight(flight);
-	}
-
-	
 /*************************************** View ScheduledFlight with ID **************************************/
 	
 	@GetMapping("/viewScheduledFlight/{flightNumber}")
@@ -145,14 +137,6 @@ public class RestApiController {
 
 		return bookingService.displayAllBooking();
 	}
-
-	/*************************************** Update Booking **************************************/
-	
-	@PutMapping("/updateBooking")
-	public ResponseEntity<?> modifyBooking(@RequestBody Booking updateBooking) {
-
-		return bookingService.updateBooking(updateBooking);
-	}
 	
 	/*************************************** Search Booking **************************************/
 
@@ -161,15 +145,6 @@ public class RestApiController {
 
 		return bookingService.findBookingById(bookingId);
 	}
-
-	/*************************************** Delete Booking **************************************/
-	
-	@DeleteMapping("/deleteBooking/{id}")
-	public ResponseEntity<?> deleteBookingByID(@PathVariable("id") Long bookingId) {
-
-		return bookingService.deleteBooking(bookingId);
-	}
-	
 	
 }
 

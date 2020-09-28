@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,12 @@ class BookingTest {
 	  @Test()
 	  public final void bookingFlight() throws NullPointerException, ParseException {
 		  String sDate1="25/09/2020";  
-		  Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+		  
+		  java.util.Date javaDate= new java.util.Date();
+		  Date date1= new Date(javaDate.getDate());
 		  
 		  User user = new User(new Long("1"), "passenger", "Dhanu", "Dhanu@123", new Long("7028807607"), "dhanashreesonaje9011@gmail.com");
-		  Passenger passenger = new Passenger(new Long("1"), "Amit", 18, new Long("123456"), 4);
+		  Passenger passenger = new Passenger(new Long("1"), "Amit", 18, new Long("123456"), 4, 4);
 		  
 		  Airport airport1= new Airport("A101","Spain","Spain Airport");
 		  Airport airport2= new Airport("A102","India","IGI Airport");
@@ -46,48 +48,50 @@ class BookingTest {
 		  
 		  ScheduledFlight sFlight1 = new ScheduledFlight();
 		  assertNotNull(sFlight1);
-		  ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,schedule,flight);
+		  ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,1000, schedule,flight);
 		  
-		  Booking booking1 = new Booking(new Long("1"), date1, 10000, 4, user, passenger, sFlight3);
-		  Booking booking2 = new Booking(new Long("1"), date1, 10000, 4, user, passenger, sFlight3);
+		  Booking booking1 = new Booking(new Long("1"), date1, 4000, user, passenger, sFlight3);
+		  Booking booking2 = new Booking(new Long("1"), date1, 4000, user, passenger, sFlight3);
 		  assertTrue(booking1.equals(booking2));
 		  
 	  }
 	  
 	  public Booking getBooking() throws ParseException {
 			String sDate1 = "18/09/2020";
-			Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+			java.util.Date javaDate= new java.util.Date();
+			  Date date1= new Date(javaDate.getDate());
 			
 			User user = new User(new Long("1"), "passenger", "Hrishi", "username1", new Long("8945623554"), "abc@gmail.com");
-			Passenger passenger = new Passenger(new Long("1"), "Amit", 18, new Long("123456"), 4);
+			Passenger passenger = new Passenger(new Long("1"), "Amit", 18, new Long("123456"), 4, 4);
 			  
 			Airport airport1= new Airport("A101","Spain","Spain Airport");
 			Airport airport2= new Airport("A102","India","IGI Airport");
 			Flight flight= new Flight(new Long("101"),"C101","M101",200);
 			Schedule schedule = new Schedule(new Long("101"), date1, date1, airport1, airport2);
 
-			ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,schedule,flight);
+			ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,1000,schedule,flight);
 	  
-			Booking booking = new Booking(new Long("1"), date1, 10000, 4, user, passenger, sFlight3);
+			Booking booking = new Booking(new Long("1"), date1, 10000, user, passenger, sFlight3);
 		
 			return booking;
 		} 
 		
 		public Booking getUpdatedBooking() throws ParseException {
 			String sDate1 = "18/09/2020";
-			Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-			
+			java.util.Date javaDate= new java.util.Date();
+			  Date date1= new Date(javaDate.getDate());
+			  
 			User user = new User(new Long("1"), "passenger", "Hrishikesh", "username2", new Long("7028807607"), "abc@gmail.com");
-			Passenger passenger = new Passenger(new Long("1"), "Amit", 18, new Long("123456"), 4);
+			Passenger passenger = new Passenger(new Long("1"), "Amit", 18, new Long("123456"), 4, 4);
 			  
 			Airport airport1= new Airport("A101","Spain","Spain Airport");
 			Airport airport2= new Airport("A102","India","IGI Airport");
 			Flight flight= new Flight(new Long("101"),"C101","M101",200);
 			Schedule schedule = new Schedule(new Long("101"), date1, date1, airport1, airport2);
 
-			ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,schedule,flight);
+			ScheduledFlight sFlight3= new ScheduledFlight(new Long("101"),120,1000, schedule,flight);
 	  
-			Booking booking = new Booking(new Long("1"), date1, 10000, 4, user, passenger, sFlight3);
+			Booking booking = new Booking(new Long("1"), date1, 10000, user, passenger, sFlight3);
 		
 			return booking;
 		} 
@@ -126,3 +130,5 @@ class BookingTest {
 		}
 	
 }
+
+

@@ -16,14 +16,6 @@ class FlightTest {
 	
 	@Autowired
 	FlightServiceImpl flightService;
-	
-	@Test
-	public final void testAddFlight() {
-		Flight flight = new Flight(new Long("123"), "AirAsia", "A102", 200);
-
-		ResponseEntity<?> responseEntity = flightService.addFlight(flight);
-		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-	}
 		
 	 @Test()
 	  public final void testEquals() throws NullPointerException {

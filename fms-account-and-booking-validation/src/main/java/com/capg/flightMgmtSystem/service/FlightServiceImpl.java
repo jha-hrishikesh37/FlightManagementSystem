@@ -48,21 +48,6 @@ public class FlightServiceImpl implements FlightService {
 		}
 	}
 	
-	/*************************************** Add Flight **************************************/
 	
-	@Override
-	public ResponseEntity<Flight> addFlight(Flight flight) {
-		Optional<Flight> findById = flightRepository.findById(flight.getFlightNumber());
-		try {
-			if (!findById.isPresent()) {
-				flightRepository.save(flight);
-				return new ResponseEntity<Flight>(flight,HttpStatus.OK);
-			} else
-				throw new UserAlreadyExistsException("Flight with number: " + flight.getFlightNumber() + " already present");
-		}
-		catch(UserAlreadyExistsException e)
-		{
-			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
-	}
 }
+
