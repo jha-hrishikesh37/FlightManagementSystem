@@ -62,8 +62,8 @@ public class BookingServiceImpl implements BookingService {
 		java.util.Date javaDate= new java.util.Date();
 		book.setBookingDate(new Date(javaDate.getTime()));
 		
-		book.setNumberOfPassengers(booking.getNumberOfPassengers());
-		book.setTicketCost(booking.getTicketCost());
+	
+		book.setTicketCost(booking.getScheduledFlight().getTicketCost()*booking.getPassenger().getNumberOfPassengers());
 		book.setPassenger(booking.getPassenger());
 		book.setScheduledFlight(booking.getScheduledFlight());
 		book.setUser(booking.getUser());
@@ -80,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
 	public void validateBooking(Booking booking) throws MessagingException, InsufficientSeatsException {
 		logger.info("Validate Booking");
 	
-		int passNo = booking.getNumberOfPassengers();
+		int passNo = booking.getPassenger().getNumberOfPassengers();
 		int avSeat = booking.getScheduledFlight().getAvailableSeat();
 		ScheduledFlight sFlight = booking.getScheduledFlight();
 		

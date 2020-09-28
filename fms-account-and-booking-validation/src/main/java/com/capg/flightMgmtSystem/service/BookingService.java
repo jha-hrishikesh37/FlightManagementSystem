@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import com.capg.flightMgmtSystem.entities.Booking;
 import com.capg.flightMgmtSystem.entities.BookingDetails;
 import com.capg.flightMgmtSystem.exceptions.InsufficientSeatsException;
+import com.capg.flightMgmtSystem.exceptions.NotFound_EmptyRepoException;
 
 public interface BookingService {
 	
@@ -17,4 +18,3 @@ public interface BookingService {
 	Iterable<Booking> displayAllBooking();
 	ResponseEntity<?> findBookingById(Long bookingId);
 }
-

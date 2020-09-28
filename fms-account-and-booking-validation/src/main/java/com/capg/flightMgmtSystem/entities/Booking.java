@@ -35,9 +35,9 @@ public class Booking {
 	private Date bookingDate;
 	@Column(name = "ticket_cost")
 	private double ticketCost;
-	@Column(name = "no_passegeners")
-	private int numberOfPassengers;
-	
+//	@Column(name = "no_passegeners")
+//	private int numberOfPassengers;
+//	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="user_id")
 	private User user;
@@ -52,18 +52,17 @@ public class Booking {
 	
 	@Override
 	public String toString() {
-		return "bookingId=" + bookingId + ", bookingDate=" + bookingDate + ", ticketCost=" + ticketCost
-				+ ", numberOfPassengers=" + numberOfPassengers + ",\n" + user + ",\n" + passenger
+		return "bookingId=" + bookingId + ", bookingDate=" + bookingDate +", ticketCost= "+ticketCost
+				+  ",\n" + user + ",\n" + passenger
 				+ ",\n" + scheduledFlight+"\n";
 	}
 
-	public Booking(Long bookingId, Date bookingDate, double ticketCost, int numberOfPassengers, User user,
+	public Booking(Long bookingId, Date bookingDate, double ticketCost, User user,
 			Passenger passenger, ScheduledFlight scheduledFlight) {
 		super();
 		this.bookingId = bookingId;
 		this.bookingDate = bookingDate;
 		this.ticketCost = ticketCost;
-		this.numberOfPassengers = numberOfPassengers;
 		this.user = user;
 		this.passenger = passenger;
 		this.scheduledFlight = scheduledFlight;

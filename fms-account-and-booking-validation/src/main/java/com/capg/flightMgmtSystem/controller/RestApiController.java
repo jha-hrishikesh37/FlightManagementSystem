@@ -62,6 +62,7 @@ public class RestApiController {
      
 			userService.addUser(user);
             return ResponseEntity.ok(HttpStatus.OK);
+            
     }
 	
 	/***************************************Login*********************************************/

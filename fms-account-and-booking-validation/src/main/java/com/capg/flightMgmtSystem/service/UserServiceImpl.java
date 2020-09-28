@@ -61,13 +61,8 @@ org.slf4j.Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
         helper.setTo(user.getEmail());
         helper.setSubject("Successfully Registered!");
         helper.setFrom("dsonaje6@gmail.com");
-//        helper.setText("<html><body style='border-style: solid;\r\n" + 
-//        		"  border-color: #DCDCDC; background-color: #F0FFFF; height: 250px; width:500px; margin-left:250px'>"
-//        		+ "<h1>Thanks for registration!</h1><br>" +
-//        		user+"<br><button type='submit' autofocus style='margin-left:220px; border-radius: 9px; border: 2px solid #DCDCDC'>"
-//        		+"<a href="+">Show Details</a></button>",true);
 
-        helper.setText(emailSenderService.getS1()+user+emailSenderService.getS2());
+        helper.setText(emailSenderService.getS1()+user+emailSenderService.getS2(),true);
         emailSenderService.sendEmail(mailMessage);
 	}
 
