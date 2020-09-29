@@ -1,9 +1,8 @@
 body {
-    background-image: url('/assets/flight_bg.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%
+    background-color:  #484848;
+    height: 650px;
   }
-  
-  img{
-      height: 100%;
-  }
+
+.box{
+  padding-top: 50px;
+}

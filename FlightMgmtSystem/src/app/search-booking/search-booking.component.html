@@ -1,0 +1,52 @@
+<body>
+  <nav class ="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <div style="color: cornsilk;"><img src="assets/img/airplane_logo.png" class="img-responsive" style="height: 40px; width: 40px;">FlightManagement</div>
+        <ul class="navbar-nav ml-auto">
+          <li style="color:rgb(148, 140, 140)"><a href="#" class="nav-link">Hello, {{user.userName}}</a></li> <!--ngIf user is logged in-->
+          
+          <li>
+              <a routerLink="/logout" class="nav-link">Logout</a> <!--ngIf logged in--, routerLink to logout-->
+          </li>        
+        </ul>
+    </div>
+  </nav>
+  <br>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="assets/img/profile_icon.png" alt="Profile Icon" style="width:100%">
+          <h1>{{user.userName}}</h1>
+          <p class="title">{{user.email}}</p>
+          <p>User Type: {{user.userType}}</p>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#"><i class="fa fa-linkedin"></i></a>
+          <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+      </div>
+    
+        <div class="col-md-6 d-flex">
+            <form class="form-inline md-form mr-auto">
+                <label>Search for Booking using Booking ID:</label>
+                <input class="form-control mr-lg-6" type="text" placeholder="Booking ID" name="bookingId" aria-label="Search" 
+                [(ngModel)]="bookingId" #idcontrol="ngModel">
+                <button class="btn btn-light btn-rounded btn-md my-0 waves-effect waves-light" type="submit" (click)="viewDetails()">Search</button>
+            </form>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <footer class="footer mt-auto py-3" style="background-color: rgb(255, 255, 255);">
+      <div class="container">
+          <span class="text-muted">Flight Reservation System 2020</span>
+          <a href="#" id="aboutus">About Us</a>
+      </div>
+    </footer>
+    
+    </body>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FMSServiceService } from '../f-ms-service.service';
+import { AuthenticationServiceService } from '../authentication-service.service';
 import { User } from '../User';
 
 @Component({
@@ -11,33 +11,22 @@ import { User } from '../User';
 export class LoginComponent implements OnInit {
 
   user:User=new User();
-  // user:User={
-  //   userId:0,
-  //   userType:"",
-  //   userName:"",
-  //   password:"",
-  //   phoneNumber:"",
-  //   email:""
-  // }
 
   invalidLogin = false;
 
-  constructor(private router: Router, public loginService:FMSServiceService) { }
+  constructor(private router: Router, public loginService:AuthenticationServiceService) { }
 
   ngOnInit(): void {
   }
 
-  checkLogin(userName,password) {
-    console.log(userName);
-    console.log(password);
+  checkLogin() {
 
-    this.loginService.authenticate(userName, password).subscribe (
+    this.loginService.authenticate(this.user).subscribe (
       res=>{
         console.log(res);
         if(res!=null) {
-          // sessionStorage.setItem('username', res.userName);
-          // sessionStorage.setItem('userType', res.userType);
-          sessionStorage.setItem('userid', res.userId+"");
+          sessionStorage.setItem('userid', res.userid+"");
+          sessionStorage.setItem('userType', res.userType+"");
           this.invalidLogin = false;
           this.router.navigate(['home']);
         }

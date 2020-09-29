@@ -1,9 +1,26 @@
 body {
-    background-image: url('/assets/flight_bg.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%
+    background-color:  #484848;
+    height: 650px;
   }
-  
-  img{
-      height: 100%;
+
+.container{
+  padding-left: 100px;
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+}
+
+.card-body img{
+  margin-top: 100px;
+  height: 435px;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateY(-100%);
   }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+

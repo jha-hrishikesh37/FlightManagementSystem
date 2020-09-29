@@ -1,18 +1,11 @@
-import { Passenger } from './passenger';
-import { ScheduledFlight } from './scheduledFlight';
+import { Passenger } from './Passenger';
+import { ScheduledFlight } from './ScheduledFlight';
 import { User } from './User';
 
-export class Booking {
+export class Booking{
+     bookingId:number;
+	 user:User;
+	 passenger:Passenger;
+	 scheduledFlight:ScheduledFlight;
 
-    bookingId: number;
-    bookingDate: string;
-    noOfPassengers: number;
-    ticketCost:number;
-    passenger: Passenger;
-    scheduledFlight: ScheduledFlight;
-    user: User;
-  
-  }
-  
-
-  
+}

@@ -1,0 +1,74 @@
+<body>
+  <nav class ="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <div style="color: cornsilk;"><img src="assets/img/airplane_logo.png" class="img-responsive" style="height: 40px; width: 40px;">FlightManagement</div>
+        <ul class="navbar-nav ml-auto">
+          <li style="color:rgb(148, 140, 140)"><a href="#" class="nav-link">Hello, {{user.userName}}</a></li> <!--ngIf user is logged in-->
+          
+          <li>
+              <a routerLink="/logout" class="nav-link">Logout</a> <!--ngIf logged in--, routerLink to logout-->
+          </li>        
+        </ul>
+    </div>
+  </nav>
+  <br>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="assets/img/profile_icon.png" alt="Profile Icon" style="width:100%">
+          <h1>{{user.userName}}</h1>
+          <p class="title">{{user.email}}</p>
+          <p>User Type: {{user.userType}}</p>
+          <a href="#"><i class="fa fa-twitter"></i></a>
+          <a href="#"><i class="fa fa-linkedin"></i></a>
+          <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+      </div>
+    
+        <div [hidden]="submitted" class="col-md-6 center-block text-center mt-5">
+          <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="name">Flight Number</label>
+              <input type="text" placeholder="Flight Number" pattern="^\d{5}$" [(ngModel)]="flight.flightNumber" #flightNumber="ngModel"
+              [class.is-invalid]="flightNumber.invalid && flightNumber.touched" class="form-control" id="flightNumber" 
+              required name="flightNumber">
+              <small class="text-danger" [class.d-none]="flightNumber.valid || flightNumber.untouched">Number should contain 5 digits</small>
+            </div>
+        
+            <div class="form-group">
+              <label for="name">Carrier Name</label>
+              <input type="text" placeholder="Carrier Name" #carrierName="ngModel" 
+              [class.is-invalid]="carrierName.invalid && carrierName.touched" class="form-control" id="carrierName" 
+              required [(ngModel)]="flight.carrierName" name="carrierName">
+              <small class="text-danger" [class.d-none]="carrierName.valid || carrierName.untouched">Carrier name is Required</small>
+            </div>
+        
+            <div class="form-group">
+              <label for="name">Flight Model</label>
+              <input type="text" placeholder="Flight MOdel" #flightModel="ngModel" 
+              [class.is-invalid]="flightModel.invalid && flightModel.touched" class="form-control" id="flightModel" 
+              required [(ngModel)]="flight.flightModel" name="flightModel">
+              <small class="text-danger" [class.d-none]="flightModel.valid || flightModel.untouched">Model is Required</small>
+            </div>
+            <div class="form-group">
+                <label for="name">Seat Capacity</label>
+                <input type="text" placeholder="Seat Capacity" #seatCapacity="ngModel" 
+                [class.is-invalid]="seatCapacity.invalid && seatCapacity.touched" class="form-control" id="seatCapacity" required 
+                [(ngModel)]="flight.seatCapacity" name="seatCapacity">
+                <small class="text-danger" [class.d-none]="seatCapacity.valid || seatCapacity.untouched">Seat Capacity is Required</small>
+            </div>
+        
+            <button type="submit" class="btn btn-success">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    </body>

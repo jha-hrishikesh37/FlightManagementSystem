@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { User } from './User';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +6,5 @@ import { User } from './User';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'FlightMgmtSystem';
-
+  title = 'Flight MAnagement System';
 }
-
-

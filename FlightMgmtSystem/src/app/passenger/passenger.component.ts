@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { FMSServiceService } from '../f-ms-service.service';
-import { Passenger } from '../passenger';
-import { ScheduledFlight } from '../scheduledFlight';
+import { AuthenticationServiceService } from '../authentication-service.service';
+import { Passenger } from '../Passenger';
+import { ScheduledFlight } from '../ScheduledFlight';
 import { User } from '../User';
 
 @Component({
@@ -12,30 +12,27 @@ import { User } from '../User';
 })
 export class PassengerComponent implements OnInit {
 
-  passengerDetails:Passenger=new Passenger();
-  scheduledFlight: ScheduledFlight=new ScheduledFlight();
-  userDetails: User=new User();
+  user:User=new User()
+  accountuserName = sessionStorage.getItem('userName');
+  userName = this.accountuserName;
 
-  constructor(private _fMSService: FMSServiceService,
+  scheduledFlight:ScheduledFlight=new ScheduledFlight();
+  passengerDetails:Passenger=new Passenger();
+
+  constructor(public loginService:AuthenticationServiceService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-   // this.scheduledFlightId = parseInt(this.route.snapshot.paramMap.get('scheduledFlightId'))
-
-    this.route.queryParams.subscribe(params => {
-      this.userDetails = JSON.parse(params.userDetails)
-      this.scheduledFlight = JSON.parse(params.scheduledFlight)
-    });
+    
   }
 
   validatePassenger(passenger){
     console.log(passenger)
-    this.router.navigate(['/finalBooking'],{
+    this.router.navigate(['/booking'],{
       queryParams:{
-        userDetails:JSON.stringify(this.userDetails),
-        scheduledFlight:JSON.stringify(this.scheduledFlight),
         passenger:JSON.stringify(passenger)}
     });
   }
 }
+

@@ -1,0 +1,98 @@
+<style>
+    .wrapper{
+      margin-top: 50px;
+      min-height: 0vh;
+    }
+    a{
+      color:  #FF8040;
+    }
+  </style>
+  
+<body>
+  
+  <div class="wrapper">
+  <div class="container">
+  
+    <div [hidden]="submitted">
+      
+        <div class="panel-heading">
+            <h1>All Bookings</h1>
+        </div>
+        <div class="panel-body">
+  
+          <form #search1="ngForm">
+            <div class="form-group">
+              <label for="bookingId">Booking Id:</label>
+              <input type="number" class="form-control" id="bookingId" required [(ngModel)]="bookingId" name="scheduledFlightId" #cid>
+            </div>
+        
+            <div class="btn-group">
+              <button (click)="showBookingById()" [disabled]="search1.form.invalid" class="btn btn-info" style="margin-left: 10px">Submit</button>
+            </div>
+          </form>
+
+          <div class="error">
+            <div *ngIf="error">{{error}}</div><br>
+          </div>
+            <table class="table table-striped table-hover" style="color:indigo" >
+              <thead>
+                <tr>
+                  <th>Booking Id</th>
+                  <th>Source Airport</th>
+                  <th>Destination Airport</th>
+                  <th>User Id</th>
+                  <th>Passenger Id</th>
+                  <th>Scheduled Flight Id</th>
+                  <th>Ticket Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sf of allBookings">
+                <td>{{sf.bookingId}}</td>
+                <td>{{sf.scheduledFlight.schedule.sourceAirport.airportLocation}}</td>
+                <td>{{sf.scheduledFlight.schedule.destinationAirport.airportLocation}}</td>
+                <td>{{sf.user.userid}}</td>
+                <td>{{sf.passenger.passengerId}}</td>
+                <td>{{sf.scheduledFlight.scheduledFlightId}}</td>   
+                <td>{{sf.ticketCost}}</td>           
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        
+        </div>
+    <div [hidden]="!submitted">
+          
+        <div class="panel-body">
+            <table class="table table-striped table-hover" style="color:indigo" >
+              <thead>
+                <tr>
+                    <th>Booking Id</th>
+                    <th>Source Airport</th>
+                    <th>Destination Airport</th>
+                    <th>User Id</th>
+                    <th>Passenger Id</th>
+                    <th>Scheduled Flight Id</th>
+                    <th>Ticket Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="bookUser">
+                <td>{{bookUser.bookingId}}</td>
+                <td>{{bookUser.scheduledFlight.schedule.sourceAirport.airportLocation}}</td>
+                <td>{{bookUser.scheduledFlight.schedule.destinationAirport.airportLocation}}</td>
+                <td>{{bookUser.user.userid}}</td>
+                <td>{{bookUser.passenger.passengerId}}</td>
+                <td>{{bookUser.scheduledFlight.scheduledFlightId}}</td>   
+                <td>{{bookUser.ticketCost}}</td>            
+            </tr>
+            </tbody>
+            </table>
+            <button class="btn btn-info" (click)="back()">Back</button>
+        </div>
+    </div>
+    </div>
+  </div>
+
+</body>
+ 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationServiceService } from '../authentication-service.service';
 import { User } from '../User';
-import { FMSServiceService } from '../f-ms-service.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,8 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   user:User=new User();
-  
-  constructor(private _fMSService: FMSServiceService,
+  error=null;
+message="";
+  constructor(public loginService:AuthenticationServiceService,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -20,14 +21,21 @@ export class RegisterComponent implements OnInit {
   }
 
   validateUser(){
-    console.log("Happy");
-    this._fMSService.registerUser(this.user)
-        .subscribe((error) => console.log(error));
+    this.loginService.registerUser(this.user)
+        .subscribe((data) => {
+          console.log(data)
+          this.router.navigate(['/login'],{
+            queryParams:{
+              userDetails:JSON.stringify(this.user)}
+          });
+        }, error =>{ this.error=error;
+          console.log(error.error.message);
+          this.error=error.error.message;
+          this.router.navigate(['/signup']);
+          alert(this.error);
+         });
 
-        this.router.navigate(['/allFlights'],{
-          queryParams:{
-            userDetails:JSON.stringify(this.user)}
-        });
+        
   }
-
 }
+

@@ -3,25 +3,53 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
+<nav class ="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <div style="color: cornsilk;"><img src="assets/img/airplane_logo.png" class="img-responsive" style="height: 40px; width: 40px;">FlightManagement</div>
+      <ul class="navbar-nav ml-auto">
+          <li style="color:rgb(148, 140, 140)"><a href="#" class="nav-link">Hello, Guest</a></li> <!--ngIf not logged in-->
+              
+          <li style="color:rgb(148, 140, 140)"><a *ngIf="loginService.isUserLoggedIn()" class="nav-link">Hello, NAME</a></li> <!--ngIf user is logged in-->
+          
+          <li>
+              <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link">SignUp</a> <!--ngIf not logged in, routerLink to signup-->
+          </li>
+          <li>
+              <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link" routerLink="/login">Login</a> <!--ngIf not logged in--, routerLink to login-->
+          </li>
+          
+          <li>
+              <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link">Logout</a> <!--ngIf logged in--, routerLink to logout-->
+          </li>        
+      </ul>
+  </div>
+</nav>
+<br>
+<br>
+
 <body>
 <div class="container">
-<div>
-<article class="card-body mx-auto" style="max-width: 600px;">
+
+<article class="card-body" style="padding-left:450px;">
+  <img src="./assets/img/airplane_section1.jpg">
+</article>
+
+<article class="card-body" style="max-width: 450px;margin-top:-460px;background-color: lightgray;">
 	<h4 class="card-title mt-3 text-center">Create Account</h4>
 	<form (ngSubmit)="validateUser()" #enForm="ngForm">
 	<div class="form-group input-group">
 		<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
 		 </div>
-     <input id="name" name="name" class="form-control" required minlength="4" placeholder="Full Name"
-     [(ngModel)]="user.name" #name="ngModel" >
+     <input id="userName" name="userName" class="form-control" required minlength="4" placeholder="Full Name"
+     [(ngModel)]="user.userName" #userName="ngModel" >
 
-        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+        <div *ngIf="userName.invalid && (userName.dirty || userName.touched)">
           <small class="text-danger">
-            <small *ngIf="name.errors.required">
+            <small *ngIf="userName.errors.required">
               Fullname is required.
             </small>
-            <small *ngIf="name.errors.minlength">
+            <small *ngIf="userName.errors.minlength">
               Name must be at least 4 characters long.
             </small>
           </small>
@@ -78,26 +106,12 @@
 		    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
 		</div>
 		<select class="form-control" #userType="ngModel" id="userType"
-    name="userType"
-    [(ngModel)]="user.userType" >
+    name="userType" 
+    [(ngModel)]="user.userType" > 
 			<option selected=""> Select User type</option>
 			<option>Admin</option>
 			<option>Passenger</option>
 		</select>
-  </div> 
-  
-  <div class="form-group input-group">
-        <input
-        type="text"
-        class="form-control"
-        pattern="^[A-Za-z0-9\s]{5,100}$"
-        #userName="ngModel"
-        placeholder="Username"
-        id="userName"
-        name="userName"
-        [(ngModel)]="user.userName"
-        required
-      />
   </div> 
 
     <div class="form-group input-group">
@@ -107,8 +121,8 @@
           <input
           type="password"
           class="form-control"
-          pattern="^[A-Za-z0-9\s]{5,100}$"
           #pass="ngModel"
+          minlength="5"
           placeholder="Create Password"
           id="pass"
           name="pass"
@@ -120,7 +134,7 @@
             <small *ngIf="pass.errors.required">
               Password is required.
             </small>
-            <small *ngIf="pass.errors.pattern">
+            <small *ngIf="pass.errors.minlength">
               Min length 5.
             </small>
           </small>
@@ -130,10 +144,10 @@
     <input type="submit" value="SignUp" [disabled]="enForm.form.invalid" class="btn btn-primary"/>
     
          
-    <p class="text-center">Have an account? <a href="">Log In</a> </p>                                                                 
+    <p class="text-center">Have an account? <a routerLink="/login">Log In</a> </p>                                                                 
 </form>
 </article>
 </div> 
 
-</div> 
+
 </body>

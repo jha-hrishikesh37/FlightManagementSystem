@@ -6,17 +6,15 @@
         <ul class="navbar-nav ml-auto">
             <li style="color:rgb(148, 140, 140)"><a href="#" class="nav-link">Hello, Guest</a></li> <!--ngIf not logged in-->
                 
-            <li style="color:rgb(148, 140, 140)"><a href="#" class="nav-link">Hello, NAME</a></li> <!--ngIf user is logged in-->
-            
             <li>
-                <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link">SignUp</a> <!--ngIf not logged in, routerLink to signup-->
+                <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link" routerLink="/signup">SignUp</a> <!--ngIf not logged in, routerLink to signup-->
             </li>
             <li>
                 <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link">Login</a> <!--ngIf not logged in--, routerLink to login-->
             </li>
             
             <li>
-                <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link">Logout</a> <!--ngIf logged in--, routerLink to logout-->
+                <a *ngIf="!loginService.isUserLoggedIn()" class="nav-link" routerLink="/logout">Logout</a> <!--ngIf logged in--, routerLink to logout-->
             </li>        
         </ul>
     </div>
@@ -42,12 +40,12 @@
                         <input type="password" name="password" id="password" class="form-control" [(ngModel)]="user.password">
                     </div>
                     <div class="form-group">
-                        <button (click)=checkLogin(email,password) class="btn btn-info btn-md">
+                        <button (click)=checkLogin() class="btn btn-info btn-md">
                         Login
                         </button>
                     </div>
                     <div id="register-link" class="text-right">
-                        <a class="text-info">New user? Register here</a>
+                        <a class="text-info" routerLink="/signup">New user? Register here</a>
                     </div>
                 </form>
             </div>
@@ -61,11 +59,6 @@
 <br>
 <br>
 <br>
-<footer class="footer mt-auto py-3" style="background-color: rgb(255, 255, 255);">
-    <div class="container">
-        <span class="text-muted">Flight Reservation System 2020</span>
-        <a href="#" id="aboutus">About Us</a>
-    </div>
-</footer>
+
 
 </body>

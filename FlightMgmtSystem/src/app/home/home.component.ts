@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationServiceService } from '../authentication-service.service';
 import { User } from '../User';
 
 @Component({
@@ -23,17 +24,18 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    // private loginService: AuthenticationService,
-    // private flightService: FlightManagementService
+      private loginService: AuthenticationServiceService
     ) { }
 
 
   ngOnInit() {
-    // this.flightService.findUser(this.userid).subscribe(data => this.user = data);
+    this.loginService.findUser(this.userid).subscribe(data => this.user = data);
 
-    // if(this.userType === "Admin" || this.userType === "admin") {
-    //   this.isUserType = true;
-    // }
+    const ut=sessionStorage.getItem('userType');
+
+    if(ut==="Admin"){
+      this.isUserType = true;
+    }
   }
 
 
